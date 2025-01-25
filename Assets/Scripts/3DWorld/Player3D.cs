@@ -12,8 +12,7 @@ public class Player3D : MonoBehaviour
     private float xRotation = 0f;
     private float initialYRotation;
 
-    private bool isTaskHovered = false;
-    private bool taskControlsActive = false;
+    private Task currentHoveredTask = null;
 
     void Start()
     {
@@ -31,7 +30,6 @@ public class Player3D : MonoBehaviour
     void Update()
     {
         HandleMouseLook();
-        HandleTaskControls();
         HandleCursorHover();
     }
 
@@ -64,59 +62,35 @@ public class Player3D : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Task task = hit.collider.GetComponent<Task>();
-            if (task != null)
+            if (task != null && task.quantity > 0)
             {
-                if (!isTaskHovered)
+                if (currentHoveredTask != task)
                 {
-                    isTaskHovered = true;
-                    ActivateTaskControls(true);
+                    if (currentHoveredTask != null)
+                    {
+                        currentHoveredTask.Deactivate();
+                    }
+
+                    currentHoveredTask = task;
+                    currentHoveredTask.Activate();
                 }
             }
             else
             {
-                if (isTaskHovered)
+                if (currentHoveredTask != null)
                 {
-                    isTaskHovered = false;
-                    ActivateTaskControls(false);
+                    currentHoveredTask.Deactivate();
+                    currentHoveredTask = null;
                 }
             }
         }
         else
         {
-            if (isTaskHovered)
+            if (currentHoveredTask != null)
             {
-                isTaskHovered = false;
-                ActivateTaskControls(false);
+                currentHoveredTask.Deactivate();
+                currentHoveredTask = null;
             }
-        }
-    }
-
-    private void ActivateTaskControls(bool activate)
-    {
-        taskControlsActive = activate;
-        // Enable or disable WASD controls here
-        // This could involve enabling/disabling a component or setting a flag
-        // For example:
-        // movementController.enabled = activate;
-    }
-
-    private void HandleTaskControls()
-    {
-        if (taskControlsActive)
-        {
-            // Implement task-specific controls, e.g., WASD movement
-            // You can enable a specific input map or handle inputs conditionally
-        }
-        else
-        {
-            // Disable task-specific controls
-        }
-
-        // Example: Decrease stress when spacebar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Assuming you have a reference to StressManager
-            // StressManager.Instance.DecreaseStress(10f);
         }
     }
 }

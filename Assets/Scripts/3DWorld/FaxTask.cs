@@ -1,26 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FaxTask : Minigame
 {
-    public string[] buttonSequence;
-    public KeyCode[] validKeys; // Corresponding keys for the sequence
+    public string[] buttonSequence = { "A", "S", "D" };
+    private KeyCode[] validKeys = { KeyCode.A, KeyCode.S, KeyCode.D };
     public float delayOnWrong = 2f;
 
     private int currentStep = 0;
     private float delayTimer = 0f;
     private bool isDelayed = false;
-
-    void Start()
-    {
-        // Initialize the button sequence
-        // Example: ["A", "S", "D"]
-        buttonSequence = new string[] { "A", "S", "D" };
-        validKeys = new KeyCode[] { KeyCode.A, KeyCode.S, KeyCode.D };
-    }
+    private int completions = 0;
 
     void Update()
     {
+        if (!IsActive())
+            return;
+
         if (isDelayed)
         {
             delayTimer += Time.deltaTime;
@@ -52,14 +47,30 @@ public class FaxTask : Minigame
         currentStep = 0;
         isDelayed = false;
         delayTimer = 0f;
+        completions = 0;
         Debug.Log("Fax Machine Minigame Started");
+    }
+
+    public override void PauseMinigame()
+    {
+        // Implement pause logic if needed
+        Debug.Log("Fax Machine Minigame Paused");
+    }
+
+    public override void ResetMinigame()
+    {
+        currentStep = 0;
+        isDelayed = false;
+        delayTimer = 0f;
+        completions = 0;
+        Debug.Log("Fax Machine Minigame Reset");
     }
 
     private void CheckInput(KeyCode inputKey)
     {
         if (inputKey == validKeys[currentStep])
         {
-            Debug.Log("Correct Key Pressed: " + inputKey);
+            Debug.Log($"Correct Key Pressed: {inputKey}");
             currentStep++;
             if (currentStep >= validKeys.Length)
             {
@@ -68,7 +79,7 @@ public class FaxTask : Minigame
         }
         else
         {
-            Debug.Log("Wrong Key Pressed: " + inputKey);
+            Debug.Log($"Wrong Key Pressed: {inputKey}");
             isDelayed = true;
             delayTimer = 0f;
         }
@@ -82,18 +93,29 @@ public class FaxTask : Minigame
 
     public override void CompleteMinigame()
     {
-        // Notify TaskManager that this task is completed
+        completions++;
         Task task = GetComponent<Task>();
         if (task != null)
         {
             task.CompleteTask();
         }
-        Destroy(gameObject); // Or deactivate
+
+        Debug.Log("Fax Machine Minigame Completed");
+
+        if (task != null && task.quantity > 0)
+        {
+            ResetMinigame();
+        }
+        else
+        {
+            // Task completed entirely
+            Destroy(gameObject);
+        }
     }
 
     public override void FailMinigame()
     {
-        // Implement failure logic
+        // Implement failure logic if needed
         Debug.Log("Fax Machine Minigame Failed");
     }
 }

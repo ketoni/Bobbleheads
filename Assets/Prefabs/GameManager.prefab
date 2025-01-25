@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 33926882873372459}
   - component: {fileID: 1706251705901931303}
   - component: {fileID: 3444827105807476581}
+  - component: {fileID: 8060117662978951557}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -62,3 +63,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968a6534af15e504d9e7fd6853c729c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8060117662978951557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076003528771349194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720c3ae5945c2344abcb437832b429b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faxesText: {fileID: 0}
+  emailsText: {fileID: 0}
+  stampsText: {fileID: 0}
+  instructionText: {fileID: 0}
+  defaultInstruction: Hover over a task to see instructions.
