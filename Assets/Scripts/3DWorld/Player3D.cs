@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class Player3D : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class Player3D : MonoBehaviour
     private float xRotation = 0f;
     private float initialYRotation;
     private bool inGame = true;
-    private Vector3 outOfGamePosition = new Vector3(-13.0f, 0.6f, 8.5f);
-    private Vector3 inGamePosition = new Vector3(-15.0f, 0.5f, 8.6f);
+    private Vector3 outOfGamePosition = new Vector3(-13.9f, 0.855f, 8.886f);
+    private Vector3 inGamePosition = new Vector3(-13.427f, 0.62f, 8.506f);
     private float zoomSpeed = 1;
 
     private Task currentHoveredTask = null;
@@ -111,9 +112,12 @@ public class Player3D : MonoBehaviour
     {
         if (inGame)
         {
-            transform.position = Vector3.Lerp(transform.position, inGamePosition, zoomSpeed * Time.deltaTime);   
+            transform.DOMove(inGamePosition, 1);
+            transform.DORotate(new Vector3(0f, 135f, 0f), 1);
+            mainCamera.transform.DORotate(new Vector3(0f, 135f, 0f), 1);
         } else {
-            transform.position = Vector3.Lerp(transform.position, outOfGamePosition, zoomSpeed * Time.deltaTime);
+            transform.DOMove(outOfGamePosition, 1);
+	    xRotation = 0f;
         }
     }
 }
