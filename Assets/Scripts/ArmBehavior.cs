@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class ArmBehavior : MonoBehaviour
 {
@@ -26,11 +28,15 @@ public class ArmBehavior : MonoBehaviour
     private int coolDownCounter;
     public float throwForce = 10f;
     private Vector2 lastHandPos;
+    private Vector2 lastMousePos;
+    private Vector2 IKInput;
+    public float mouseMoveSpeed = 0.0001f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        IKInput = Vector2.zero;
         gameManager = FindFirstObjectByType<GameManager>();
         hand = transform.GetChild(0).GetChild(0);
         handPositions = new List<Vector2>(new Vector2[handPositionFrames]);
@@ -38,8 +44,7 @@ public class ArmBehavior : MonoBehaviour
         upperArm = transform;
         lowerArm = transform.GetChild(0);
         playerInput = transform.parent.parent.parent.parent.parent.GetComponent<PlayerInput>();
-        // !!! if screen size changes, this will not apply anymore
-        armLength = transform.parent.GetComponent<SpriteRenderer>().bounds.size.y * Screen.height/1080;
+        armLength = transform.parent.GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
     private void FixedUpdate()
@@ -62,28 +67,18 @@ public class ArmBehavior : MonoBehaviour
     private void MoveArms()
     {
         Vector2 moveInput = playerInput.actions["Look"].ReadValue<Vector2>();
-        
-        // it's a mouse
-        if(moveInput.magnitude > 1)
-        {
-            Vector2 camPos = Camera.main.WorldToScreenPoint(transform.position);
-            if(dart != null) 
-            {
-                Vector2 direction = camPos - (Vector2) dart.transform.position;
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Debug.Log("Mouse pos: "+moveInput);
+        // Vector2 deltaPos = moveInput - lastMousePos;
+        Vector2 deltaPos = moveInput;
+        lastMousePos = moveInput;
+        IKInput += deltaPos * mouseMoveSpeed;
 
-                // Apply the rotation (only rotate around Z-axis in 2D)
-                // dart.transform.localRotation = Quaternion.Euler(0, 0, angle-135);
-            }
-            float reach = armLength * 100; // pixels *100
-            moveInput = moveInput - camPos;
-            moveInput /= reach;
-            if(moveInput.magnitude > 1) moveInput.Normalize();
-        }
+        if(IKInput.magnitude > 1) IKInput.Normalize();
 
-        var angles = InverseKinematics(moveInput.x, moveInput.y, armLength, armLength);
+        var angles = InverseKinematics(IKInput.x, IKInput.y, armLength, armLength);
         float theta1Degrees = angles.Item1 * Mathf.Rad2Deg;
         float theta2Degrees = angles.Item2 * Mathf.Rad2Deg;
+
         lowerArm.eulerAngles = new Vector3(0,0, theta1Degrees);
         upperArm.eulerAngles = new Vector3(0,0, theta2Degrees-90);
     }

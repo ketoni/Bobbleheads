@@ -46,9 +46,18 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""Quit"",
                     ""type"": ""Button"",
                     ""id"": ""b2c2851f-d2da-4348-a90c-062cc37eabcd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnterGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f4a4521-d38e-4f7a-ae90-47cd7254d658"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -70,7 +79,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse;Touch"",
@@ -103,11 +112,22 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c30b49f8-84d2-432a-9192-bb85c0025dce"",
-                    ""path"": ""<Keyboard>/#(P)"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Pause"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dabb6203-501b-4304-b775-beca6a197a49"",
+                    ""path"": ""<Keyboard>/#(E)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnterGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -181,7 +201,8 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
-        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
+        m_Player_EnterGame = m_Player.FindAction("EnterGame", throwIfNotFound: true);
     }
 
     ~@Inputs()
@@ -250,14 +271,16 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Throw;
-    private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Quit;
+    private readonly InputAction m_Player_EnterGame;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
-        public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Quit => m_Wrapper.m_Player_Quit;
+        public InputAction @EnterGame => m_Wrapper.m_Player_EnterGame;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -273,9 +296,12 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Throw.started += instance.OnThrow;
             @Throw.performed += instance.OnThrow;
             @Throw.canceled += instance.OnThrow;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
+            @Quit.started += instance.OnQuit;
+            @Quit.performed += instance.OnQuit;
+            @Quit.canceled += instance.OnQuit;
+            @EnterGame.started += instance.OnEnterGame;
+            @EnterGame.performed += instance.OnEnterGame;
+            @EnterGame.canceled += instance.OnEnterGame;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -286,9 +312,12 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Throw.started -= instance.OnThrow;
             @Throw.performed -= instance.OnThrow;
             @Throw.canceled -= instance.OnThrow;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
+            @Quit.started -= instance.OnQuit;
+            @Quit.performed -= instance.OnQuit;
+            @Quit.canceled -= instance.OnQuit;
+            @EnterGame.started -= instance.OnEnterGame;
+            @EnterGame.performed -= instance.OnEnterGame;
+            @EnterGame.canceled -= instance.OnEnterGame;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -355,6 +384,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     {
         void OnLook(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
+        void OnEnterGame(InputAction.CallbackContext context);
     }
 }
