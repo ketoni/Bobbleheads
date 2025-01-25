@@ -123,5 +123,6 @@ public class TaskManager : MonoBehaviour
         randomTask.quantity += 1;
         randomTask.UpdateTaskUI(); // Ensure the task updates its UI and collider
         Debug.Log($"Randomly increased {randomTask.taskType} quantity to {randomTask.quantity}");
+        randomTask.PlayTaskAddedAudio();
     }
 }

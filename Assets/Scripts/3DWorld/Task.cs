@@ -12,15 +12,24 @@ public class Task : MonoBehaviour
 
     public TaskType taskType;
     public int quantity = 1;
+    public int test = 1;
 
     // UI Text reference
     public TextMeshProUGUI taskText;
+    public AudioClip taskAddedAudio;
+
+    private AudioSource audioSource;
 
     // Reference to TaskManager
     private TaskManager taskManager;
 
     // Reference to the Minigame
     private Minigame currentMinigame;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -171,5 +180,10 @@ public class Task : MonoBehaviour
             default:
                 return "Unknown Task.";
         }
+    }
+
+    public void PlayTaskAddedAudio()
+    {
+        audioSource.PlayOneShot(taskAddedAudio);
     }
 }
