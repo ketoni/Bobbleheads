@@ -857,96 +857,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &834032954
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 834032955}
-  - component: {fileID: 834032956}
-  - component: {fileID: 834032958}
-  m_Layer: 0
-  m_Name: PlayerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &834032955
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834032954}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.027783, y: 1.0678369, z: -0.0239162}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &834032956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834032954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e9d35fa9be2674418c3b196d94223de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 5747405755814965062, guid: 520707a3f853be64a8f06d32d3c5c8ec, type: 3}
---- !u!114 &834032958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834032954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
-  m_AllowJoining: 1
-  m_JoinBehavior: 0
-  m_PlayerJoinedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_PlayerLeftEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_JoinAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: 
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: d04e6892-3646-4dd7-8eb9-8a03fa5e781c
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 5747405755814965062, guid: 520707a3f853be64a8f06d32d3c5c8ec, type: 3}
-  m_SplitScreen: 0
-  m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
-  m_SplitScreenRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1 &1148582915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,11 +994,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5516738998998943389, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+      propertyPath: dartPrefab
+      value: 
+      objectReference: {fileID: 1581865670962067513, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
+    - target: {fileID: 5516738998998943389, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+      propertyPath: throwForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5516738998998943389, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+      propertyPath: handPositionFrames
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5747405755814965062, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6812706841879449360, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095324857895121182, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+      propertyPath: rbBody
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987434325066375637, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6466428680501215116, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
+    - {fileID: 6812706841879449360, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1320,6 +1256,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dart
       objectReference: {fileID: 0}
+    - target: {fileID: 3192304458593826749, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5434782942623144249, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.0001864
@@ -1334,7 +1274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5434782942623144249, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.36052948
       objectReference: {fileID: 0}
     - target: {fileID: 5434782942623144249, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1346,7 +1286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5434782942623144249, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.93274784
       objectReference: {fileID: 0}
     - target: {fileID: 5434782942623144249, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1358,7 +1298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5434782942623144249, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -47.66
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1374,7 +1314,6 @@ SceneRoots:
   - {fileID: 298290835}
   - {fileID: 2072041691}
   - {fileID: 19224873}
-  - {fileID: 834032955}
   - {fileID: 787637172}
   - {fileID: 579151331}
   - {fileID: 7511857477051272386}

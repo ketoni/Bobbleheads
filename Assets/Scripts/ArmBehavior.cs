@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -16,11 +17,22 @@ public class ArmBehavior : MonoBehaviour
     public GameObject dartPrefab;
     private GameObject dart;
 
+    private List<Vector2> handPositions;
+
+    public int handPositionFrames = 2;
+    private Transform hand;
+    public int throwCoolDown = 10;
+    private int coolDownCounter;
+    public float throwForce = 10f;
+    private Vector2 lastHandPos;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        hand = transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+        Debug.Log(hand.name);
+        handPositions = new List<Vector2>(new Vector2[handPositionFrames]);
         SpawnDart();
         upperArm = transform;
         lowerArm = transform.GetChild(0).GetChild(0).GetChild(0);
@@ -32,14 +44,15 @@ public class ArmBehavior : MonoBehaviour
     private void FixedUpdate()
     {
         MoveArms();
+        
         Throw();
     }
 
     private void SpawnDart()
     {
-        var hand = transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0);
         dart = Instantiate(dartPrefab, hand);
         dart.transform.localPosition = Vector3.zero;
+        dart.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
     }
 
     private void MoveArms()
@@ -50,13 +63,17 @@ public class ArmBehavior : MonoBehaviour
         if(moveInput.magnitude > 1)
         {
             Vector2 camPos = Camera.main.WorldToScreenPoint(transform.position);
-            Debug.Log("armLength: "+armLength);
+            if(dart != null) 
+            {
+                Vector2 direction = camPos - (Vector2) dart.transform.position;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                // Apply the rotation (only rotate around Z-axis in 2D)
+                // dart.transform.localRotation = Quaternion.Euler(0, 0, angle-135);
+            }
             float reach = armLength * 100; // pixels *100
-            Debug.Log("reach: "+reach);
             moveInput = moveInput - camPos;
-            Debug.Log("moveInput: "+moveInput);
             moveInput /= reach;
-             Debug.Log("moveInput/reach: "+moveInput);
             if(moveInput.magnitude > 1) moveInput.Normalize();
         }
 
@@ -106,7 +123,41 @@ public class ArmBehavior : MonoBehaviour
 
     private void Throw()
     {
+        
+        // Shift positions forward
+        for(int i = handPositionFrames-1; i > 0; i--)
+        {
+            handPositions[i] = handPositions[i-1];
+        }
+        // Store current pos
+        handPositions[0] = (Vector2) hand.position - lastHandPos;
+        lastHandPos = hand.position;
+        
+        // throwing on cooldown
+        if(coolDownCounter > 0)
+        {
+            coolDownCounter--;
+            if(coolDownCounter == 0) SpawnDart();
+            return;
+        }
 
-
+        // throw dart
+        if(playerInput.actions["Attack"].IsPressed())
+        {
+            Vector2 avgSpd = Vector2.zero;
+            for(int i = 0; i < handPositionFrames; i++)
+            {
+                avgSpd += handPositions[i];
+            }
+            avgSpd = avgSpd / handPositionFrames;
+            dart.transform.SetParent(null);
+            dart.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            dart.GetComponent<Rigidbody2D>().linearVelocity = avgSpd*throwForce;
+            float angle = Mathf.Atan2(avgSpd.y, avgSpd.x) * Mathf.Rad2Deg;
+            dart.transform.rotation = Quaternion.Euler(0, 0, angle-90);
+            Debug.Log("angle: "+angle);
+            Debug.Log("dart.transform.rotation: "+dart.transform.rotation.eulerAngles.z);
+            coolDownCounter = throwCoolDown;
+        }
     }
 }
