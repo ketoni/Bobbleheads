@@ -37140,6 +37140,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1551206521989489146, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: randomTaskInterval
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3061969819993560393, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -37191,6 +37195,10 @@ PrefabInstance:
     - target: {fileID: 7358807678068763741, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8272394662249115017, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: increaseInterval
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
