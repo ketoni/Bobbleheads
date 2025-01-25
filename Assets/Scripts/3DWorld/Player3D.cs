@@ -11,6 +11,10 @@ public class Player3D : MonoBehaviour
     private Camera mainCamera;
     private float xRotation = 0f;
     private float initialYRotation;
+    private bool inGame = true;
+    private Vector3 outOfGamePosition = new Vector3(-13.0f, 0.6f, 8.5f);
+    private Vector3 inGamePosition = new Vector3(-15.0f, 0.5f, 8.6f);
+    private float zoomSpeed = 1;
 
     private Task currentHoveredTask = null;
 
@@ -28,9 +32,18 @@ public class Player3D : MonoBehaviour
     }
 
     void Update()
-    {
-        HandleMouseLook();
-        HandleCursorHover();
+    {	
+        if (!inGame)
+        {
+            HandleMouseLook();
+            HandleCursorHover();
+        }
+
+        if (Input.GetKeyDown("escape"))
+        {
+            inGame = !inGame;
+	    zoom();
+        }
     }
 
     private void HandleMouseLook()
@@ -91,6 +104,16 @@ public class Player3D : MonoBehaviour
                 currentHoveredTask.Deactivate();
                 currentHoveredTask = null;
             }
+        }
+    }
+
+    private void zoom()
+    {
+        if (inGame)
+        {
+            transform.position = Vector3.Lerp(transform.position, inGamePosition, zoomSpeed * Time.deltaTime);   
+        } else {
+            transform.position = Vector3.Lerp(transform.position, outOfGamePosition, zoomSpeed * Time.deltaTime);
         }
     }
 }
