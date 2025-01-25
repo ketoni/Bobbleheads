@@ -43,6 +43,8 @@ public class FaxTask : Minigame
 
     public override void StartMinigame()
     {
+
+
         // Initialize minigame
         currentStep = 0;
         isDelayed = false;
