@@ -15,25 +15,9 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
 
-    // Left-stick or WASD
-    private void Move()
-    {
-        Vector2 moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
-        rbBody.AddForce(new Vector2(moveInput.x * forcePower, 0), ForceMode2D.Force);
-        if(rbBody.linearVelocity.x > maxMoveSpeed)
-        {
-            rbBody.linearVelocity = new Vector2(maxMoveSpeed, rbBody.linearVelocity.y);
-        }
-        else if(rbBody.linearVelocity.x < -maxMoveSpeed)
-        {
-            rbBody.linearVelocity = new Vector2(-maxMoveSpeed, rbBody.linearVelocity.y);
-        }
-    }
+
+
     // Right-stick or Mouse
     public void Aim(Vector2 direction)
     {

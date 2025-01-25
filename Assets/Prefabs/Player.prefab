@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143adedad7de386448070a448080fbbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dartPrefab: {fileID: 1581865670962067513, guid: 08546e1ba211fe242ac887febfc0d8ab, type: 3}
 --- !u!1 &1196434057084993589
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +529,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 8261722143062594774, guid: 193b0ab64c9dcc64a89eb1b25e97c2d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
