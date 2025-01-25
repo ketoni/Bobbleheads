@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class ArmBehavior : MonoBehaviour
 {
+    private GameManager gameManager;
     private Transform upperArm;
     private Transform lowerArm;
     private PlayerInput playerInput;
@@ -30,22 +31,24 @@ public class ArmBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        hand = transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0);
-        Debug.Log(hand.name);
+        gameManager = FindFirstObjectByType<GameManager>();
+        hand = transform.GetChild(0).GetChild(0);
         handPositions = new List<Vector2>(new Vector2[handPositionFrames]);
         SpawnDart();
         upperArm = transform;
-        lowerArm = transform.GetChild(0).GetChild(0).GetChild(0);
-        playerInput = transform.parent.parent.parent.GetComponent<PlayerInput>();
+        lowerArm = transform.GetChild(0);
+        playerInput = transform.parent.parent.parent.parent.parent.GetComponent<PlayerInput>();
         // !!! if screen size changes, this will not apply anymore
-        armLength = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.y * Screen.height/1080;
+        armLength = transform.parent.GetComponent<SpriteRenderer>().bounds.size.y * Screen.height/1080;
     }
 
     private void FixedUpdate()
     {
-        MoveArms();
-        
-        Throw();
+        if(!gameManager.paused)
+        {
+            MoveArms();
+            Throw();
+        }
     }
 
     private void SpawnDart()
@@ -53,6 +56,7 @@ public class ArmBehavior : MonoBehaviour
         dart = Instantiate(dartPrefab, hand);
         dart.transform.localPosition = Vector3.zero;
         dart.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        dart.GetComponent<BoxCollider2D>().enabled = false;
     }
 
     private void MoveArms()
@@ -81,7 +85,7 @@ public class ArmBehavior : MonoBehaviour
         float theta1Degrees = angles.Item1 * Mathf.Rad2Deg;
         float theta2Degrees = angles.Item2 * Mathf.Rad2Deg;
         lowerArm.eulerAngles = new Vector3(0,0, theta1Degrees);
-        upperArm.eulerAngles = new Vector3(0,0, theta2Degrees);
+        upperArm.eulerAngles = new Vector3(0,0, theta2Degrees-90);
     }
 
     // Input x, y and lengths of joints
@@ -142,7 +146,7 @@ public class ArmBehavior : MonoBehaviour
         }
 
         // throw dart
-        if(playerInput.actions["Attack"].IsPressed())
+        if(playerInput.actions["Throw"].IsPressed())
         {
             Vector2 avgSpd = Vector2.zero;
             for(int i = 0; i < handPositionFrames; i++)
@@ -153,10 +157,9 @@ public class ArmBehavior : MonoBehaviour
             dart.transform.SetParent(null);
             dart.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             dart.GetComponent<Rigidbody2D>().linearVelocity = avgSpd*throwForce;
+            dart.GetComponent<BoxCollider2D>().enabled = true;
             float angle = Mathf.Atan2(avgSpd.y, avgSpd.x) * Mathf.Rad2Deg;
             dart.transform.rotation = Quaternion.Euler(0, 0, angle-90);
-            Debug.Log("angle: "+angle);
-            Debug.Log("dart.transform.rotation: "+dart.transform.rotation.eulerAngles.z);
             coolDownCounter = throwCoolDown;
         }
     }
