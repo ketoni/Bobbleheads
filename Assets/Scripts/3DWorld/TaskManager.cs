@@ -6,6 +6,10 @@ public class TaskManager : MonoBehaviour
 {
     public static TaskManager Instance { get; private set; }
 
+    public GameObject stampTask;
+    public GameObject faxTask;
+    public GameObject emailTask;
+
     // List of all registered tasks
     private List<Task> allTasks = new List<Task>();
 
