@@ -106,7 +106,7 @@ public class EmailTask : Minigame
         else
         {
             // Task completed entirely
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 

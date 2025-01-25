@@ -130,7 +130,8 @@ public class Task : MonoBehaviour
         if (quantity <= 0)
         {
             Debug.Log($"{taskType} task completed.");
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            currentMinigame.ResetMinigame();
         }
     }
 

@@ -76,7 +76,7 @@ public class StampingTask : Minigame
         else
         {
             // Task completed entirely
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 

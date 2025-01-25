@@ -109,7 +109,7 @@ public class FaxTask : Minigame
         else
         {
             // Task completed entirely
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
