@@ -6,6 +6,8 @@ public class EmailTask : Minigame
     public Slider progressBar;
     public float targetProgress = 1f;
     public float progressIncrement = 0.05f;
+
+    private int charAmount = 20;
     public AudioClip keyPressAudio;
     public AudioClip emailSendAudio;
     private bool isBarFilled = false;
@@ -44,6 +46,8 @@ public class EmailTask : Minigame
         if (progressBar != null)
         {
             progressBar.value = 0f;
+            charAmount = 20;
+            FindFirstObjectByType<BobbleHeadManager>().UpdateEmailCharAmount(charAmount.ToString());
             Debug.Log("EmailTask Slider Initialized.");
         }
         Debug.Log("Email Minigame Started");
@@ -62,6 +66,8 @@ public class EmailTask : Minigame
         if (progressBar != null)
         {
             progressBar.value = 0f;
+            charAmount = 20;
+            FindFirstObjectByType<BobbleHeadManager>().UpdateEmailCharAmount(charAmount.ToString());
         }
         Debug.Log("Email Minigame Reset");
     }
@@ -75,9 +81,12 @@ public class EmailTask : Minigame
             audioSource.pitch = Random.Range(0.9f, 1.1f);
             audioSource.PlayOneShot(keyPressAudio);
             audioSource.pitch = 1;
+            charAmount--;
+            FindFirstObjectByType<BobbleHeadManager>().UpdateEmailCharAmount(charAmount.ToString());
 
-            if (progressBar.value >= targetProgress)
+            if (charAmount <= 0)
             {
+                charAmount = 0;
                 isBarFilled = true;
                 Debug.Log("Progress Bar Filled. Press ENTER to send.");
             }

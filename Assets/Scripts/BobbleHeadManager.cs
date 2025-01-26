@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class BobbleHeadManager : MonoBehaviour
 {
-    public static BobbleHeadManager Instance { get; private set; }
+    // public static BobbleHeadManager Instance { get; private set; }
     public InputActionAsset inputActions;
     public GameObject enemyPrefab;
     public float spawnCooldown;
@@ -16,11 +16,12 @@ public class BobbleHeadManager : MonoBehaviour
     public Transform[] spawnLocations;
 
     private float timer = 0;
-    private InputAction pauseAction;
     public GameObject defaultScreen;
     public GameObject adBreak;
     public TextMeshPro adCounterText;
     public GameObject startGameScreen;
+    public GameObject emailCountText;
+    public GameObject emailCharCountText;
     private List<GameObject> characters;
 
     public bool paused = true;
@@ -33,22 +34,21 @@ public class BobbleHeadManager : MonoBehaviour
 
     public float LosingPunishTime = 11f;
 
+    // void Awake()
+    // {
+    //     Instance = this;
+    // }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         defaultScreen.SetActive(true);
         adBreak.SetActive(false);
+        adCounterText.gameObject.SetActive(false);
         startGameScreen.SetActive(false);
         playerHead = GameObject.Find("PlayerHead");
         // Find the action map and action for pausing
         var actionMap = inputActions.FindActionMap("Player");
-        pauseAction = actionMap.FindAction("Quit");
-        if (pauseAction != null)
-        {
-            pauseAction.performed += OnQuitPerformed;
-            pauseAction.Enable();
-        }
-        pauseAction = actionMap.FindAction("EnterGame");
+        var pauseAction = actionMap.FindAction("EnterGame");
         if (pauseAction != null)
         {
             pauseAction.performed += OnGameEnterPerformed;
@@ -87,11 +87,13 @@ public class BobbleHeadManager : MonoBehaviour
             if(timeLeft > 0)
             {
                 // Ads
-                adCounterText.text = timeLeft + "s";
+                adCounterText.text = "Skipping Ad in "+timeLeft + "s";
             }
             else
             {
                 adBreak.SetActive(false);
+                adCounterText.gameObject.SetActive(false);
+                adBreak.GetComponent<Ads>().Open();
                 startGameScreen.SetActive(true);
             }
         }
@@ -112,15 +114,10 @@ public class BobbleHeadManager : MonoBehaviour
         characters.Remove(enemy);
     }
 
-    private void OnQuitPerformed(InputAction.CallbackContext context)
-    {
-        
-        defaultScreen.SetActive(true);
-    }
-
     private void OnGameEnterPerformed(InputAction.CallbackContext context)
     {
-        EnterGame();
+        if(defaultScreen.activeSelf) EnterGame();
+        else Exit();
     }
 
     private void OnLeftClickPerformed(InputAction.CallbackContext context)
@@ -155,6 +152,7 @@ public class BobbleHeadManager : MonoBehaviour
         punishTimer = 0;
         gameStarted = false;
         adBreak.SetActive(true);
+        adCounterText.gameObject.SetActive(true);
     }
 
     public void EnterGame()
@@ -163,14 +161,20 @@ public class BobbleHeadManager : MonoBehaviour
         MusicManager.Instance.Play2DGameMusic();
     }
 
-    public void Activate()
-    {
-        EnterGame();
-    }
-
     public void Exit()
     {
         defaultScreen.SetActive(true);
         MusicManager.Instance.Play3DWorldMusic();
+    }
+
+    public void UpdateEmailAmount(int amount)
+    {
+        emailCountText.GetComponent<TextMeshPro>().text = amount.ToString();
+        if(amount == 0) emailCharCountText.GetComponent<TextMeshPro>().text = "?";
+    }
+
+    public void UpdateEmailCharAmount(string text)
+    {
+        emailCharCountText.GetComponent<TextMeshPro>().text = text;
     }
 }
