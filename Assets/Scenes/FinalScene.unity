@@ -35115,6 +35115,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3683818557325119960, guid: 1586ef124654d46bfbb54eec7077562c, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: db408675580504166a294bb519a2bb1a, type: 3}
+    - target: {fileID: 3683818557325119960, guid: 1586ef124654d46bfbb54eec7077562c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: db408675580504166a294bb519a2bb1a, type: 3}
     - target: {fileID: 4636134197529795018, guid: 1586ef124654d46bfbb54eec7077562c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.440298
@@ -35154,6 +35162,10 @@ PrefabInstance:
     - target: {fileID: 4636134197529795018, guid: 1586ef124654d46bfbb54eec7077562c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6693526592063235853, guid: 1586ef124654d46bfbb54eec7077562c, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

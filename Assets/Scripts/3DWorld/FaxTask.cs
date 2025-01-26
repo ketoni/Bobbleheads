@@ -218,7 +218,7 @@ public class FaxTask : Minigame
             //Destroy(gameObject);
             if (nextKeyText != null)
             {
-                nextKeyText.text = "";
+                //nextKeyText.text = "";
 
             }
         }
@@ -229,11 +229,11 @@ public class FaxTask : Minigame
         // Implement failure logic if needed
         Debug.Log("Fax Machine Minigame Failed");
 
-        // Optionally, provide failure feedback
-        if (nextKeyText != null)
-        {
-            nextKeyText.text = "";
-        }
+        //// Optionally, provide failure feedback
+        //if (nextKeyText != null)
+        //{
+        //    nextKeyText.text = "";
+        //}
     }
 
     /// <summary>
@@ -253,7 +253,7 @@ public class FaxTask : Minigame
         }
         else
         {
-            nextKeyText.text = "OK";
+            nextKeyText.text = "+";
         }
     }
 
@@ -262,10 +262,12 @@ public class FaxTask : Minigame
         if(thereIsTask)
         {
             screen.GetComponent<Renderer>().material = thereIsATaskMaterial;
+            nextKeyText.enabled = true;
         }
         else
         {
             screen.GetComponent<Renderer>().material = noTaskMaterial;
+            nextKeyText.enabled = false;
         }
     }
 }
