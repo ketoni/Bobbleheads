@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static MusicManager Instance { get; private set; }
+    [SerializeField] private AudioSource worldMusic3D;
+    [SerializeField] private AudioSource gameMusic2D;
+
+    public void Play2DGameMusic()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Play3DWorldMusic()
     {
-        
+
     }
 }

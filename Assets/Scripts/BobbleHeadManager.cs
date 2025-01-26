@@ -24,6 +24,7 @@ public class BobbleHeadManager : MonoBehaviour
     private List<GameObject> characters;
 
     public bool paused = true;
+    public AudioClip testAudio;
 
     private bool gameStarted = false;
     private GameObject playerHead;
@@ -31,7 +32,7 @@ public class BobbleHeadManager : MonoBehaviour
     private float punishTimer = 1000f;
 
     public float LosingPunishTime = 11f;
-
+    private MusicManager musicManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -160,6 +161,7 @@ public class BobbleHeadManager : MonoBehaviour
     public void EnterGame()
     {
         defaultScreen.SetActive(false);
+        MusicManager.Instance.Play2DGameMusic();
     }
 
     public void Activate()
@@ -170,5 +172,6 @@ public class BobbleHeadManager : MonoBehaviour
     public void Exit()
     {
         defaultScreen.SetActive(true);
+        MusicManager.Instance.Play3DWorldMusic();
     }
 }
