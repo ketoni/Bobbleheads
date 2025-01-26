@@ -16,6 +16,7 @@ public class Task : MonoBehaviour
 
     // UI Text reference
     public TextMeshProUGUI taskText;
+    public GameObject taskPopup;
     public AudioClip taskAddedAudio;
 
     private AudioSource audioSource;
@@ -73,8 +74,10 @@ public class Task : MonoBehaviour
         currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
         currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
 
-        // Update instruction UI
-        UIManager.Instance.SetInstruction(GetInstructionForTask());
+        // Show popup object
+        //UIManager.Instance.SetInstruction(GetInstructionForTask());
+        taskPopup.SetActive(true);
+
         Debug.Log($"{taskType} minigame activated.");
     }
 
@@ -101,8 +104,10 @@ public class Task : MonoBehaviour
             currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
         }
 
-        // Reset instruction UI
-        UIManager.Instance.SetDefaultInstruction();
+        // Hide popup
+        //UIManager.Instance.SetDefaultInstruction();
+        taskPopup.SetActive(false);
+
     }
 
     // Start the minigame
