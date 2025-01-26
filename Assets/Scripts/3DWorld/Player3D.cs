@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using System;
+using UnityEngine.UIElements;
 
 public class Player3D : MonoBehaviour
 {
@@ -31,8 +32,8 @@ public class Player3D : MonoBehaviour
         mainCamera = Camera.main;
 
         // Lock the cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
 
         // Record the initial Y rotation
         initialYRotation = playerBody.eulerAngles.y;
@@ -132,6 +133,7 @@ public class Player3D : MonoBehaviour
     
 
     public void GameOver() {
+	if (victory) return;
 	dead = true;
         transform.DOMove(gameOverPosition, 2);
         transform.DORotate(new Vector3(0f, 140f, 0f), 1);
