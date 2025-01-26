@@ -128,10 +128,15 @@ public class TaskManager : MonoBehaviour
         Debug.Log($"Randomly increased {randomTask.taskType} quantity to {randomTask.quantity}");
         randomTask.PlayTaskAddedAudio();
 
-        randomTask.gameObject.GetComponent<HighlightObject>().SetScaling(true);
-        randomTask.gameObject.GetComponent<Outline>().enabled = true;
+        var target = player.GetComponent<Player3D>().currentHoveredTarget;
 
-        if(randomTask.taskType == Task.TaskType.FaxMachine)
+        if (target != null && target.task != randomTask)
+        {
+            randomTask.gameObject.GetComponent<HighlightObject>().SetScaling(true);
+            randomTask.gameObject.GetComponent<Outline>().enabled = true;
+        }
+
+        if (randomTask.taskType == Task.TaskType.FaxMachine)
         {
             randomTask.GetComponent<FaxTask>().SwitchMaterial(true);
         }

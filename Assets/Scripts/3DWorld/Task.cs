@@ -98,12 +98,11 @@ public class Task : MonoBehaviour
             taskManager.RemoveActiveTask(this);
         }
 
-        if(quantity <= 0)
+        if(quantity <= 0 && currentMinigame != null)
         {
             currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
             currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
         }
-
         // Hide popup
         //UIManager.Instance.SetDefaultInstruction();
         taskPopup.SetActive(false);
