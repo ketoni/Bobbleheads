@@ -128,8 +128,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskType: 1
-  quantity: 1
+  quantity: 0
+  test: 1
   taskText: {fileID: 0}
+  taskAddedAudio: {fileID: 0}
 --- !u!114 &8682102305659154037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +159,8 @@ MonoBehaviour:
   progressBar: {fileID: 0}
   targetProgress: 1
   progressIncrement: 0.1
+  keyPressAudio: {fileID: 0}
+  emailSendAudio: {fileID: 0}
 --- !u!114 &4282715527964978035
 MonoBehaviour:
   m_ObjectHideFlags: 0
