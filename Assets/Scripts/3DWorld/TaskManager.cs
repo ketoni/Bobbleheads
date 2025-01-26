@@ -86,6 +86,7 @@ public class TaskManager : MonoBehaviour
     public void UpdateTaskQuantity(Task.TaskType taskType, int quantity)
     {
         UIManager.Instance.UpdateTaskQuantity(taskType, quantity);
+        if(taskType == Task.TaskType.Email) FindFirstObjectByType<BobbleHeadManager>().UpdateEmailAmount(quantity);
     }
 
     // Check if a task is active

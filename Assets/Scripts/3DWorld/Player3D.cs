@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using System;
 
 public class Player3D : MonoBehaviour
 {
     public float mouseSensitivity = 100f;
     public float minHorizontalAngle = -45f;
     public float maxHorizontalAngle = 45f;
-
+    public bool dead = false;
+    public bool victory = false;
+    public GameObject gameOverScreen;
+    public GameObject winningText;
+    public GameObject winningPanel;
     private Transform playerBody;
     private Camera mainCamera;
     private float xRotation = 0f;
@@ -18,7 +23,7 @@ public class Player3D : MonoBehaviour
     private Vector3 gameOverPosition = new Vector3(-13.9f, 0f, 8.886f);
     private float zoomSpeed = 1;
 
-    private Task currentHoveredTask = null;
+    private TaskTarget currentHoveredTarget = null;
 
     void Start()
     {
@@ -35,6 +40,8 @@ public class Player3D : MonoBehaviour
 
     void Update()
     {
+        if (dead) return;
+        if (victory) return;
         if (!inGame)
         {
             HandleMouseLook();
@@ -73,39 +80,36 @@ public class Player3D : MonoBehaviour
     {
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
-
         if (Physics.Raycast(ray, out hit))
         {
-            Task task = hit.collider.GetComponent<Task>();
-            if (task != null && task.quantity > 0)
+            TaskTarget target = hit.collider.GetComponent<TaskTarget>();
+            if (target != null)
             {
-                if (currentHoveredTask != task)
+                // Found target
+                if (target.task == null)
                 {
-                    if (currentHoveredTask != null)
+                    throw new NullReferenceException("TaskTaget has no task!");
+                }
+                if (currentHoveredTarget != target)
+                {
+                    // Found other one
+                    if (currentHoveredTarget != null)
                     {
-                        currentHoveredTask.Deactivate();
+                        currentHoveredTarget.task.Deactivate();
                     }
 
-                    currentHoveredTask = task;
-                    currentHoveredTask.Activate();
+                    currentHoveredTarget = target;
+                    currentHoveredTarget.task.Activate();
                 }
-            }
-            else
-            {
-                if (currentHoveredTask != null)
-                {
-                    currentHoveredTask.Deactivate();
-                    currentHoveredTask = null;
-                }
+                return;
             }
         }
-        else
+
+        // Otherwise deactivate the current
+        if (currentHoveredTarget != null)
         {
-            if (currentHoveredTask != null)
-            {
-                currentHoveredTask.Deactivate();
-                currentHoveredTask = null;
-            }
+            currentHoveredTarget.task.Deactivate();
+            currentHoveredTarget = null;
         }
     }
 
@@ -126,7 +130,16 @@ public class Player3D : MonoBehaviour
     
 
     public void GameOver() {
+	dead = true;
         transform.DOMove(gameOverPosition, 2);
-        mainCamera.transform.DORotate(new Vector3(0f, 140f, 0f), 1);
+        transform.DORotate(new Vector3(0f, 140f, 0f), 1);
+        mainCamera.transform.DORotate(new Vector3(40f, 135f, 0f), 1);
+        gameOverScreen.SetActive(true);
+    }
+    
+    public void Winning() {
+        victory = true;
+        winningText.SetActive(true);
+ 	winningPanel.SetActive(true);
     }
 }

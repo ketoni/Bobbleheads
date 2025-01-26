@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class StressManager : MonoBehaviour
 {
     public static StressManager Instance { get; private set; }
-
+    public GameObject player;
     public float stress = 0f;
     public float maxStress = 100f;
     public float decreaseAmount = 10f;
@@ -94,8 +94,6 @@ public class StressManager : MonoBehaviour
 
     private void GameOver()
     {
-        // Implement game over logic here
-        Debug.Log("Game Over! Stress reached 100.");
-        // For example, load a game over scene or restart the game
+        player.GetComponent<Player3D>().GameOver();
     }
 }

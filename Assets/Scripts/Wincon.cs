@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Wincon : MonoBehaviour
 {
+    public GameObject player;
     public void Winnered()
     {
-        Debug.Log("Wonnered!");
+        player.GetComponent<Player3D>().Winning();
     }
 }

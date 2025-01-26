@@ -67,8 +67,6 @@ public class ArmBehavior : MonoBehaviour
     private void MoveArms()
     {
         Vector2 moveInput = playerInput.actions["Look"].ReadValue<Vector2>();
-        Debug.Log("Mouse pos: "+moveInput);
-        // Vector2 deltaPos = moveInput - lastMousePos;
         Vector2 deltaPos = moveInput;
         lastMousePos = moveInput;
         IKInput += deltaPos * mouseMoveSpeed;
@@ -154,7 +152,7 @@ public class ArmBehavior : MonoBehaviour
             dart.GetComponent<Rigidbody2D>().linearVelocity = avgSpd*throwForce;
             dart.GetComponent<BoxCollider2D>().enabled = true;
             float angle = Mathf.Atan2(avgSpd.y, avgSpd.x) * Mathf.Rad2Deg;
-            dart.transform.rotation = Quaternion.Euler(0, 0, angle-90);
+            dart.transform.rotation = Quaternion.Euler(0, 0, angle);
             coolDownCounter = throwCoolDown;
             gameManager.PlayThrowDartAudio();
         }
