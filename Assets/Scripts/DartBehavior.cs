@@ -7,7 +7,7 @@ public class DartBehavior : MonoBehaviour
     {
         Vector2 velocity = GetComponent<Rigidbody2D>().linearVelocity;
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle-90);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
