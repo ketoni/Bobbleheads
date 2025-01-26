@@ -50,11 +50,11 @@ public class StressManager : MonoBehaviour
             GameOver();
         }
 
-        // Decrease stress when spacebar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DecreaseStress(decreaseAmount);
-        }
+        //// Decrease stress when spacebar is pressed
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    DecreaseStress(decreaseAmount);
+        //}
     }
 
     private void UpdateStressMultiplier()

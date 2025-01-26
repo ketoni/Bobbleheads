@@ -129,6 +129,11 @@ public class Task : MonoBehaviour
 
         if (quantity <= 0)
         {
+            quantity = 0;
+
+            currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
+            currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
+
             Debug.Log($"{taskType} task completed.");
             //Destroy(gameObject);
             currentMinigame.ResetMinigame();

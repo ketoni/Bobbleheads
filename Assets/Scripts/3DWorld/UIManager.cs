@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         SetDefaultInstruction();
+        Cursor.visible = false;
     }
 
     public void UpdateTaskQuantity(Task.TaskType taskType, int quantity)
