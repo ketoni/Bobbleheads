@@ -32,7 +32,6 @@ public class BobbleHeadManager : MonoBehaviour
     private float punishTimer = 1000f;
 
     public float LosingPunishTime = 11f;
-    private MusicManager musicManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
