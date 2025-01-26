@@ -134,5 +134,9 @@ public class TaskManager : MonoBehaviour
         {
             randomTask.GetComponent<FaxTask>().SwitchMaterial(true);
         }
+        else if(randomTask.taskType == Task.TaskType.StampingPapers)
+        {
+            randomTask.GetComponent<StampingTask>().paperScaler.IncreaseScaleY();
+        }
     }
 }
