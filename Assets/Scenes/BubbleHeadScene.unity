@@ -177,8 +177,9 @@ MonoBehaviour:
   emailCountText: {fileID: 177873764}
   emailCharCountText: {fileID: 336150194}
   paused: 0
-  testAudio: {fileID: 8300000, guid: 8d342064534ae43d29560e063261e518, type: 3}
   LosingPunishTime: 10
+  bubblePopAudio: {fileID: 8300000, guid: 2ca3d221b3f7a4f0980d6e033201127f, type: 3}
+  throwDartAudio: {fileID: 8300000, guid: 719a4175b941b48a99b9bfebe3807e6a, type: 3}
 --- !u!82 &19224875
 AudioSource:
   m_ObjectHideFlags: 0
