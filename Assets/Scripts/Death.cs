@@ -14,6 +14,6 @@ public class Death : DiableBehaviour
     public override void Die()
     {
         GameObject.Find("PlayerHead").SetActive(false);
-        FindFirstObjectByType<GameManager>().Lose();
+        FindFirstObjectByType<BobbleHeadManager>().Lose();
     }
 }

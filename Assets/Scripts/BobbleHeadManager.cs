@@ -6,8 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameManager : MonoBehaviour
+public class BobbleHeadManager : MonoBehaviour
 {
+    public static BobbleHeadManager Instance { get; private set; }
     public InputActionAsset inputActions;
     public GameObject enemyPrefab;
     public float spawnCooldown;
@@ -31,15 +32,15 @@ public class GameManager : MonoBehaviour
 
     public float LosingPunishTime = 11f;
 
-    private bool isAdBreak = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        startGameScreen.SetActive(true);
+        defaultScreen.SetActive(true);
+        adBreak.SetActive(false);
+        startGameScreen.SetActive(false);
         playerHead = GameObject.Find("PlayerHead");
         // Find the action map and action for pausing
-        paused = true;
         var actionMap = inputActions.FindActionMap("Player");
         pauseAction = actionMap.FindAction("Quit");
         if (pauseAction != null)
@@ -68,9 +69,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // StressManager.Instance.DecreaseStress(0.1f);
+        paused = defaultScreen.activeSelf || adBreak.activeSelf || startGameScreen.activeSelf;
         if(!paused)
         {
+            Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
             timer += Time.deltaTime;
             if(timer > spawnCooldown)
             {
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Physics2D.simulationMode = SimulationMode2D.Script;
             punishTimer += Time.deltaTime;
             int timeLeft = (int)(LosingPunishTime-punishTimer);
             if(timeLeft > 0)
@@ -90,7 +93,6 @@ public class GameManager : MonoBehaviour
             {
                 adBreak.SetActive(false);
                 startGameScreen.SetActive(true);
-                isAdBreak = false;
             }
         }
     }
@@ -112,8 +114,7 @@ public class GameManager : MonoBehaviour
 
     private void OnQuitPerformed(InputAction.CallbackContext context)
     {
-        paused = true;
-        Physics2D.simulationMode = SimulationMode2D.Script;
+        
         defaultScreen.SetActive(true);
     }
 
@@ -124,19 +125,23 @@ public class GameManager : MonoBehaviour
 
     private void OnLeftClickPerformed(InputAction.CallbackContext context)
     {
-        if((!gameStarted && !isAdBreak) || punishTimer > LosingPunishTime)
+        if(paused && !defaultScreen.activeSelf)
         {
-            StartGame();
-            gameStarted = true;
+            if(!gameStarted)
+            {
+                StartGame();
+                gameStarted = true;
+            }
+            else
+            {
+                startGameScreen.SetActive(false);
+            }
         }
     }
 
     public void StartGame()
     {
-        
-        Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
         playerHead.SetActive(true);
-        paused = false;
         for (int i = characters.Count - 1; i >= 1; i--)
         {
             Destroy(characters[i]);
@@ -148,14 +153,22 @@ public class GameManager : MonoBehaviour
     public void Lose()
     {
         punishTimer = 0;
-        paused = true;
         gameStarted = false;
         adBreak.SetActive(true);
-        isAdBreak = true;
     }
 
     public void EnterGame()
     {
         defaultScreen.SetActive(false);
+    }
+
+    public void Activate()
+    {
+        EnterGame();
+    }
+
+    public void Exit()
+    {
+        defaultScreen.SetActive(true);
     }
 }

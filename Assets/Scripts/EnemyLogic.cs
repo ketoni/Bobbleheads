@@ -4,11 +4,11 @@ public class EnemyLogic : MonoBehaviour
 {
     public float moveSpeed = 1f;
 
-    private GameManager gameManager;
+    private BobbleHeadManager gameManager;
 
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
+        gameManager = FindFirstObjectByType<BobbleHeadManager>();
     }
 
     // Update is called once per frame

@@ -4,11 +4,11 @@ public class AirEnemyLogic : MonoBehaviour
 {
     public float moveSpeed = 1f;
     private Transform target;
-    private GameManager gameManager;
+    private BobbleHeadManager gameManager;
 
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
+        gameManager = FindFirstObjectByType<BobbleHeadManager>();
         target = GameObject.Find("PlayerHead").transform;
     }
 

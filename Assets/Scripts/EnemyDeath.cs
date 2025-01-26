@@ -1,10 +1,10 @@
-using UnityEngine;
 
 public class EnemyDeath : DiableBehaviour
 {
     public override void Die()
     {
-        FindFirstObjectByType<GameManager>().RemoveEnemy(gameObject);
+        FindFirstObjectByType<BobbleHeadManager>().RemoveEnemy(gameObject);
+        StressManager.Instance.DecreaseStress(5f);
         Destroy(gameObject);
     }
 }

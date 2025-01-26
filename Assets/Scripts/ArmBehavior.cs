@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Controls;
 
 public class ArmBehavior : MonoBehaviour
 {
-    private GameManager gameManager;
+    private BobbleHeadManager gameManager;
     private Transform upperArm;
     private Transform lowerArm;
     private PlayerInput playerInput;
@@ -37,7 +37,7 @@ public class ArmBehavior : MonoBehaviour
     void Start()
     {
         IKInput = Vector2.zero;
-        gameManager = FindFirstObjectByType<GameManager>();
+        gameManager = FindFirstObjectByType<BobbleHeadManager>();
         hand = transform.GetChild(0).GetChild(0);
         handPositions = new List<Vector2>(new Vector2[handPositionFrames]);
         SpawnDart();
