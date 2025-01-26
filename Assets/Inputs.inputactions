@@ -24,9 +24,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Quit",
                     "type": "Button",
                     "id": "b2c2851f-d2da-4348-a90c-062cc37eabcd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EnterGame",
+                    "type": "Button",
+                    "id": "3f4a4521-d38e-4f7a-ae90-47cd7254d658",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -48,7 +57,7 @@
                 {
                     "name": "",
                     "id": "8c8e490b-c610-4785-884f-f04217b23ca4",
-                    "path": "<Mouse>/position",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
@@ -81,11 +90,22 @@
                 {
                     "name": "",
                     "id": "c30b49f8-84d2-432a-9192-bb85c0025dce",
-                    "path": "<Keyboard>/#(P)",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dabb6203-501b-4304-b775-beca6a197a49",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnterGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

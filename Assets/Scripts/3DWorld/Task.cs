@@ -70,6 +70,9 @@ public class Task : MonoBehaviour
             taskManager.AddActiveTask(this);
         }
 
+        currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
+        currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
+
         // Update instruction UI
         UIManager.Instance.SetInstruction(GetInstructionForTask());
         Debug.Log($"{taskType} minigame activated.");
@@ -80,6 +83,8 @@ public class Task : MonoBehaviour
     {
         if (currentMinigame != null)
         {
+            currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(true);
+            currentMinigame.gameObject.GetComponent<Outline>().enabled = true;
             PauseMinigame();
             Debug.Log($"{taskType} minigame deactivated.");
         }
@@ -88,6 +93,12 @@ public class Task : MonoBehaviour
         if (taskManager != null)
         {
             taskManager.RemoveActiveTask(this);
+        }
+
+        if(quantity <= 0)
+        {
+            currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
+            currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
         }
 
         // Reset instruction UI
@@ -113,6 +124,8 @@ public class Task : MonoBehaviour
 
         if (currentMinigame != null)
         {
+            currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
+            currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
             currentMinigame.StartMinigame();
         }
         else
@@ -138,6 +151,9 @@ public class Task : MonoBehaviour
 
         if (quantity <= 0)
         {
+            currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
+            currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
+
             Debug.Log($"{taskType} task completed.");
             //Destroy(gameObject);
             currentMinigame.ResetMinigame();

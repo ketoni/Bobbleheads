@@ -16,7 +16,10 @@ public class GameManager : MonoBehaviour
 
     private float timer = 0;
     private InputAction pauseAction;
-    public GameObject pauseText;
+    public GameObject defaultScreen;
+    public GameObject adBreak;
+    public TextMeshPro adCounterText;
+    public GameObject startGameScreen;
     private List<GameObject> characters;
 
     public bool paused = true;
@@ -24,23 +27,30 @@ public class GameManager : MonoBehaviour
     private bool gameStarted = false;
     private GameObject playerHead;
 
-    public SpriteRenderer overlaySprite;
-
     private float punishTimer = 1000f;
 
     public float LosingPunishTime = 11f;
 
+    private bool isAdBreak = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        startGameScreen.SetActive(true);
         playerHead = GameObject.Find("PlayerHead");
         // Find the action map and action for pausing
         paused = true;
         var actionMap = inputActions.FindActionMap("Player");
-        pauseAction = actionMap.FindAction("Pause");
+        pauseAction = actionMap.FindAction("Quit");
         if (pauseAction != null)
         {
-            pauseAction.performed += OnPausePerformed;
+            pauseAction.performed += OnQuitPerformed;
+            pauseAction.Enable();
+        }
+        pauseAction = actionMap.FindAction("EnterGame");
+        if (pauseAction != null)
+        {
+            pauseAction.performed += OnGameEnterPerformed;
             pauseAction.Enable();
         }
         pauseAction = actionMap.FindAction("Throw");
@@ -53,13 +63,12 @@ public class GameManager : MonoBehaviour
         {
             GameObject.Find("Player")
         };
-        pauseText.GetComponent<TextMeshPro>().text = "Left-Click to Start";
-        overlaySprite.color = new Color(overlaySprite.color.r, overlaySprite.color.g, overlaySprite.color.b, 1f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // StressManager.Instance.DecreaseStress(0.1f);
         if(!paused)
         {
             timer += Time.deltaTime;
@@ -68,16 +77,20 @@ public class GameManager : MonoBehaviour
                 SpawnEnemy();
             }
         }
-        else{
+        else
+        {
             punishTimer += Time.deltaTime;
             int timeLeft = (int)(LosingPunishTime-punishTimer);
             if(timeLeft > 0)
             {
-                pauseText.GetComponent<TextMeshPro>().text = "Oh no you lost, restart in "+timeLeft+" seconds";
+                // Ads
+                adCounterText.text = timeLeft + "s";
             }
             else
             {
-                pauseText.GetComponent<TextMeshPro>().text = "Left-Click to start";
+                adBreak.SetActive(false);
+                startGameScreen.SetActive(true);
+                isAdBreak = false;
             }
         }
     }
@@ -97,46 +110,39 @@ public class GameManager : MonoBehaviour
         characters.Remove(enemy);
     }
 
-    private void OnPausePerformed(InputAction.CallbackContext context)
+    private void OnQuitPerformed(InputAction.CallbackContext context)
     {
-        pauseText.SetActive(!pauseText.activeSelf);
-        paused = pauseText.activeSelf;
-        // Handle your pause logic here
-        if(paused)
-        {
-            // disable game
-            Physics2D.simulationMode = SimulationMode2D.Script;
-            pauseText.GetComponent<TextMeshPro>().text = "Paused";
-            overlaySprite.color = new Color(overlaySprite.color.r, overlaySprite.color.g, overlaySprite.color.b, 0.5f);
-        }
-        else
-        {
-            // active game again
-            Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
-            overlaySprite.color = new Color(overlaySprite.color.r, overlaySprite.color.g, overlaySprite.color.b, 0f);
-        }
+        paused = true;
+        Physics2D.simulationMode = SimulationMode2D.Script;
+        defaultScreen.SetActive(true);
+    }
+
+    private void OnGameEnterPerformed(InputAction.CallbackContext context)
+    {
+        EnterGame();
     }
 
     private void OnLeftClickPerformed(InputAction.CallbackContext context)
     {
-        if(!gameStarted && punishTimer > LosingPunishTime)
+        if((!gameStarted && !isAdBreak) || punishTimer > LosingPunishTime)
         {
             StartGame();
+            gameStarted = true;
         }
-        gameStarted = true;
     }
 
     public void StartGame()
     {
+        
+        Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
         playerHead.SetActive(true);
-        pauseText.SetActive(false);
-        overlaySprite.color = new Color(overlaySprite.color.r, overlaySprite.color.g, overlaySprite.color.b, 0f);
         paused = false;
         for (int i = characters.Count - 1; i >= 1; i--)
         {
             Destroy(characters[i]);
             characters.RemoveAt(i); // Optionally, if you need to update the list
         }
+        startGameScreen.SetActive(false);
     }
 
     public void Lose()
@@ -144,8 +150,12 @@ public class GameManager : MonoBehaviour
         punishTimer = 0;
         paused = true;
         gameStarted = false;
-        pauseText.SetActive(true);
-        pauseText.GetComponent<TextMeshPro>().text = "Oh no you lost, restart in "+LosingPunishTime+" seconds";
-        overlaySprite.color = new Color(overlaySprite.color.r, overlaySprite.color.g, overlaySprite.color.b, 1f);
+        adBreak.SetActive(true);
+        isAdBreak = true;
+    }
+
+    public void EnterGame()
+    {
+        defaultScreen.SetActive(false);
     }
 }

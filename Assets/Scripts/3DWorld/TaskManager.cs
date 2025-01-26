@@ -124,5 +124,8 @@ public class TaskManager : MonoBehaviour
         randomTask.UpdateTaskUI(); // Ensure the task updates its UI and collider
         Debug.Log($"Randomly increased {randomTask.taskType} quantity to {randomTask.quantity}");
         randomTask.PlayTaskAddedAudio();
+
+        randomTask.gameObject.GetComponent<HighlightObject>().SetScaling(true);
+        randomTask.gameObject.GetComponent<Outline>().enabled = true;
     }
 }

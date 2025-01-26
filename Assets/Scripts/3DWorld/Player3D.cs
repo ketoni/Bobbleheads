@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class Player3D : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class Player3D : MonoBehaviour
     private Camera mainCamera;
     private float xRotation = 0f;
     private float initialYRotation;
+    private bool inGame = true;
+    private Vector3 outOfGamePosition = new Vector3(-13.9f, 0.855f, 8.886f);
+    private Vector3 inGamePosition = new Vector3(-13.427f, 0.62f, 8.506f);
+    private float zoomSpeed = 1;
 
     private Task currentHoveredTask = null;
 
@@ -28,9 +33,18 @@ public class Player3D : MonoBehaviour
     }
 
     void Update()
-    {
-        HandleMouseLook();
-        HandleCursorHover();
+    {	
+        if (!inGame)
+        {
+            HandleMouseLook();
+            HandleCursorHover();
+        }
+
+        if (Input.GetKeyDown("escape"))
+        {
+            inGame = !inGame;
+	    zoom();
+        }
     }
 
     private void HandleMouseLook()
@@ -91,6 +105,19 @@ public class Player3D : MonoBehaviour
                 currentHoveredTask.Deactivate();
                 currentHoveredTask = null;
             }
+        }
+    }
+
+    private void zoom()
+    {
+        if (inGame)
+        {
+            transform.DOMove(inGamePosition, 1);
+            transform.DORotate(new Vector3(0f, 135f, 0f), 1);
+            mainCamera.transform.DORotate(new Vector3(0f, 135f, 0f), 1);
+        } else {
+            transform.DOMove(outOfGamePosition, 1);
+	    xRotation = 0f;
         }
     }
 }
