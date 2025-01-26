@@ -18709,10 +18709,42 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1824123309643441879, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1824123309643441879, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471396352693620737, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: stampAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: ea98afb1b5a9447698ea5b780a0f2eff, type: 3}
+    - target: {fileID: 2471396352693620737, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: movePaperAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c6adbdb3ed94421c8a71de8a831b703, type: 3}
     - target: {fileID: 3061969819993560393, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3349796268572831428, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: taskAddedAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 6384191a0701c4f9fa2424979fcb02db, type: 3}
+    - target: {fileID: 3690106421314801184, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: faxSendAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b4b3d00adc5c4bed9710e1f61cdf4d3, type: 3}
+    - target: {fileID: 3690106421314801184, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: faxErrorAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: f0ee6bfbfc8cb40309588e528d1c4418, type: 3}
+    - target: {fileID: 3690106421314801184, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: keyPressAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 52061e3e570424453b370bf99023d42d, type: 3}
     - target: {fileID: 3840256303910266673, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -18761,10 +18793,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7296404139902906424, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296404139902906424, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7358807678068763741, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8836763724192615889, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836763724192615889, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9212231536445323959, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: keyPressAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 5dae75e126796469ba013b9de5cbc0cd, type: 3}
+    - target: {fileID: 9212231536445323959, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: emailSendAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: cd49df98150154a989f761382b48bec5, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

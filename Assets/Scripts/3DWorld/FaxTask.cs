@@ -5,11 +5,20 @@ public class FaxTask : Minigame
     public string[] buttonSequence = { "A", "S", "D" };
     private KeyCode[] validKeys = { KeyCode.A, KeyCode.S, KeyCode.D };
     public float delayOnWrong = 2f;
+    public AudioClip keyPressAudio;
+    public AudioClip faxSendAudio;
+    public AudioClip faxErrorAudio;
 
     private int currentStep = 0;
     private float delayTimer = 0f;
     private bool isDelayed = false;
     private int completions = 0;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -74,9 +83,11 @@ public class FaxTask : Minigame
         {
             Debug.Log($"Correct Key Pressed: {inputKey}");
             currentStep++;
+            audioSource.PlayOneShot(keyPressAudio);
             if (currentStep >= validKeys.Length)
             {
                 SendFax();
+                audioSource.PlayOneShot(faxSendAudio);
             }
         }
         else
@@ -84,6 +95,7 @@ public class FaxTask : Minigame
             Debug.Log($"Wrong Key Pressed: {inputKey}");
             isDelayed = true;
             delayTimer = 0f;
+            audioSource.PlayOneShot(faxErrorAudio);
         }
     }
 

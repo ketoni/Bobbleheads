@@ -4,6 +4,14 @@ public class StampingTask : Minigame
 {
     private bool isStamped = false;
     private int completions = 0;
+    public AudioClip stampAudio;
+    public AudioClip movePaperAudio;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -47,6 +55,7 @@ public class StampingTask : Minigame
     {
         isStamped = true;
         Debug.Log("Paper Stamped");
+        audioSource.PlayOneShot(stampAudio);
     }
 
     private void MovePaper()
@@ -55,6 +64,7 @@ public class StampingTask : Minigame
         {
             Debug.Log("Paper Moved");
             CompleteMinigame();
+            audioSource.PlayOneShot(movePaperAudio);
         }
     }
 

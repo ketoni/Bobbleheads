@@ -6,9 +6,16 @@ public class EmailTask : Minigame
     public Slider progressBar;
     public float targetProgress = 1f;
     public float progressIncrement = 0.05f;
-
+    public AudioClip keyPressAudio;
+    public AudioClip emailSendAudio;
     private bool isBarFilled = false;
     private int completions = 0;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -62,6 +69,9 @@ public class EmailTask : Minigame
         {
             progressBar.value += progressIncrement;
             Debug.Log($"Progress Bar Increased: {progressBar.value}");
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(keyPressAudio);
+            audioSource.pitch = 1;
 
             if (progressBar.value >= targetProgress)
             {
@@ -81,6 +91,7 @@ public class EmailTask : Minigame
         {
             Debug.Log("Email Sent");
             CompleteMinigame();
+            audioSource.PlayOneShot(emailSendAudio);
         }
         else
         {

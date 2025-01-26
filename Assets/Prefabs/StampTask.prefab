@@ -145,7 +145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskType: 0
   quantity: 1
+  test: 1
   taskText: {fileID: 0}
+  taskAddedAudio: {fileID: 8300000, guid: 03da7a401f76e43ceb330c4cc37be1f6, type: 3}
 --- !u!114 &102218276937454178
 MonoBehaviour:
   m_ObjectHideFlags: 0
