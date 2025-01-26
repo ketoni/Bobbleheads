@@ -23,7 +23,7 @@ public class Player3D : MonoBehaviour
     private Vector3 gameOverPosition = new Vector3(-13.9f, 0f, 8.886f);
     private float zoomSpeed = 1;
 
-    private TaskTarget currentHoveredTarget = null;
+    public TaskTarget currentHoveredTarget = null;
 
     void Start()
     {
@@ -135,11 +135,12 @@ public class Player3D : MonoBehaviour
 	dead = true;
         transform.DOMove(gameOverPosition, 2);
         transform.DORotate(new Vector3(0f, 140f, 0f), 1);
-        mainCamera.transform.DORotate(new Vector3(40f, 135f, 0f), 1);
+        mainCamera.transform.DORotate(new Vector3(40f, 135f, 28f), 1);
         gameOverScreen.SetActive(true);
     }
     
     public void Winning() {
+	if (dead) return;
         victory = true;
         winningText.SetActive(true);
  	winningPanel.SetActive(true);
