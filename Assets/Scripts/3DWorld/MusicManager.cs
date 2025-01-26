@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance { get; private set; }
     [SerializeField] private AudioSource worldMusic3D;
     [SerializeField] private AudioSource gameMusic2D;
+    [SerializeField] private AudioSource gameEndingAudio;
+    [SerializeField] private AudioClip victorySound;
+    [SerializeField] private AudioClip deathSound;
 
     private readonly float crossFadeTime = 0.5f;
     private bool canFadeToBubbleheads = true;
@@ -42,7 +46,7 @@ public class MusicManager : MonoBehaviour
 
     public void Play2DGameMusic()
     {
-                if (fadeIn != null)
+        if (fadeIn != null)
         {
             StopCoroutine(fadeIn);
         }
@@ -83,5 +87,37 @@ public class MusicManager : MonoBehaviour
         }
 
         a.volume = 1f;
+    }
+
+    private void FadeOut3DAnd2D()
+    {
+        if (fadeIn != null)
+        {
+            StopCoroutine(fadeIn);
+        }
+        if (fadeOut != null)
+        {
+            StopCoroutine(fadeOut);
+        }
+        if (worldMusic3D.isPlaying)
+        {
+            StartCoroutine(FadeOut(worldMusic3D, 0.2f));
+        }
+        if (gameMusic2D.isPlaying)
+        {
+            StartCoroutine(FadeOut(gameMusic2D, 0.2f));
+        }
+    }
+
+    public void PlayVictorySound()
+    {
+        FadeOut3DAnd2D();
+        worldMusic3D.PlayOneShot(victorySound);
+    }
+
+    public void PlayDeathSound()
+    {
+        FadeOut3DAnd2D();
+        gameMusic2D.PlayOneShot(deathSound);
     }
 }
