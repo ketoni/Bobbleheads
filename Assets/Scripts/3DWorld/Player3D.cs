@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using System;
+using UnityEngine.UIElements;
 
 public class Player3D : MonoBehaviour
 {
@@ -31,8 +32,8 @@ public class Player3D : MonoBehaviour
         mainCamera = Camera.main;
 
         // Lock the cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
 
         // Record the initial Y rotation
         initialYRotation = playerBody.eulerAngles.y;
@@ -120,24 +121,28 @@ public class Player3D : MonoBehaviour
             transform.DOMove(inGamePosition, 1);
             transform.DORotate(new Vector3(0f, 135f, 0f), 1);
             mainCamera.transform.DORotate(new Vector3(0f, 135f, 0f), 1);
+            FindFirstObjectByType<BobbleHeadManager>().EnterGame();
         }
         else
         {
             transform.DOMove(outOfGamePosition, 1);
             xRotation = 0f;
+            FindFirstObjectByType<BobbleHeadManager>().Exit();
         }
     }
     
 
     public void GameOver() {
+	if (victory) return;
 	dead = true;
         transform.DOMove(gameOverPosition, 2);
         transform.DORotate(new Vector3(0f, 140f, 0f), 1);
-        mainCamera.transform.DORotate(new Vector3(40f, 135f, 0f), 1);
+        mainCamera.transform.DORotate(new Vector3(40f, 135f, 28f), 1);
         gameOverScreen.SetActive(true);
     }
     
     public void Winning() {
+	if (dead) return;
         victory = true;
         winningText.SetActive(true);
  	winningPanel.SetActive(true);
