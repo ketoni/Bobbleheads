@@ -116,8 +116,8 @@ public class BobbleHeadManager : MonoBehaviour
 
     private void OnGameEnterPerformed(InputAction.CallbackContext context)
     {
-        if(defaultScreen.activeSelf) EnterGame();
-        else Exit();
+        // if(defaultScreen.activeSelf) EnterGame();
+        // else Exit();
     }
 
     private void OnLeftClickPerformed(InputAction.CallbackContext context)

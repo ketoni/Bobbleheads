@@ -120,11 +120,13 @@ public class Player3D : MonoBehaviour
             transform.DOMove(inGamePosition, 1);
             transform.DORotate(new Vector3(0f, 135f, 0f), 1);
             mainCamera.transform.DORotate(new Vector3(0f, 135f, 0f), 1);
+            FindFirstObjectByType<BobbleHeadManager>().EnterGame();
         }
         else
         {
             transform.DOMove(outOfGamePosition, 1);
             xRotation = 0f;
+            FindFirstObjectByType<BobbleHeadManager>().Exit();
         }
     }
     
