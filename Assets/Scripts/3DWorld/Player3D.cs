@@ -12,7 +12,7 @@ public class Player3D : MonoBehaviour
     private Camera mainCamera;
     private float xRotation = 0f;
     private float initialYRotation;
-    private bool inGame = true;
+    public bool inGame = true;
     private Vector3 outOfGamePosition = new Vector3(-13.9f, 0.855f, 8.886f);
     private Vector3 inGamePosition = new Vector3(-13.427f, 0.62f, 8.506f);
     private float zoomSpeed = 1;
@@ -40,7 +40,7 @@ public class Player3D : MonoBehaviour
             HandleCursorHover();
         }
 
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown("space"))
         {
             inGame = !inGame;
             zoom();
