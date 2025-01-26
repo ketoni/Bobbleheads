@@ -23,7 +23,7 @@ public class Player3D : MonoBehaviour
     private Vector3 gameOverPosition = new Vector3(-13.9f, 0f, 8.886f);
     private float zoomSpeed = 1;
 
-    private TaskTarget currentHoveredTarget = null;
+    public TaskTarget currentHoveredTarget = null;
 
     void Start()
     {
