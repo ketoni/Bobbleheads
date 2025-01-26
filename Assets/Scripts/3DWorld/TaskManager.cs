@@ -6,6 +6,8 @@ public class TaskManager : MonoBehaviour
 {
     public static TaskManager Instance { get; private set; }
 
+    public GameObject player;
+
     public GameObject stampTask;
     public GameObject faxTask;
     public GameObject emailTask;
@@ -127,5 +129,10 @@ public class TaskManager : MonoBehaviour
 
         randomTask.gameObject.GetComponent<HighlightObject>().SetScaling(true);
         randomTask.gameObject.GetComponent<Outline>().enabled = true;
+
+        if(randomTask.taskType == Task.TaskType.FaxMachine)
+        {
+            randomTask.GetComponent<FaxTask>().SwitchMaterial(true);
+        }
     }
 }

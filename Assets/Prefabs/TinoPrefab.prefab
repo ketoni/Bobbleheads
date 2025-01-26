@@ -459,7 +459,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: E
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -976,6 +976,7 @@ MonoBehaviour:
   mouseSensitivity: 100
   minHorizontalAngle: -80
   maxHorizontalAngle: 80
+  inGame: 1
 --- !u!1 &2793394429578280879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,10 +1143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968a6534af15e504d9e7fd6853c729c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1972973139318421050}
   stampTask: {fileID: 3801310876220620272}
   faxTask: {fileID: 6061306503941733791}
   emailTask: {fileID: 0}
-  randomTaskInterval: 10
+  randomTaskInterval: 5
 --- !u!114 &7908094387105892265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,7 +1590,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c5af29263d2eb424085b176d9d37f1f8, type: 2}
+  - {fileID: 2100000, guid: 201aed2de4f74e24ea792d7a04dde175, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1913,6 +1915,81 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &6764634491860872787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162718186540728112}
+  - component: {fileID: 4612805861723364952}
+  - component: {fileID: 5131300923680642089}
+  m_Layer: 5
+  m_Name: Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &162718186540728112
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764634491860872787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.32, y: 2.32, z: 2.32}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 6364350053524925288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4612805861723364952
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764634491860872787}
+  m_CullTransparentMesh: 1
+--- !u!114 &5131300923680642089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764634491860872787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 6d75d4f2daf29f741ab46ac57aae5942, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6958522644194509813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,6 +2059,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 162718186540728112}
   - {fileID: 6787214669601516900}
   - {fileID: 818403930892670307}
   - {fileID: 7048476339814837297}
@@ -2711,10 +2789,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f19d57a7fad024fb2dddace38b0532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayOnWrong: 1
   keyPressAudio: {fileID: 8300000, guid: 52061e3e570424453b370bf99023d42d, type: 3}
   faxSendAudio: {fileID: 8300000, guid: 9b4b3d00adc5c4bed9710e1f61cdf4d3, type: 3}
   faxErrorAudio: {fileID: 8300000, guid: f0ee6bfbfc8cb40309588e528d1c4418, type: 3}
+  nextKeyText: {fileID: 4206241563267703511}
+  noTaskMaterial: {fileID: 2100000, guid: 201aed2de4f74e24ea792d7a04dde175, type: 2}
+  thereIsATaskMaterial: {fileID: 2100000, guid: c5af29263d2eb424085b176d9d37f1f8, type: 2}
+  screen: {fileID: 6022865591652386312}
 --- !u!114 &3156992208663535472
 MonoBehaviour:
   m_ObjectHideFlags: 0
