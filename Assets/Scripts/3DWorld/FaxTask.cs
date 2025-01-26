@@ -1,29 +1,45 @@
 using UnityEngine;
+using TMPro; // Import TextMeshPro namespace
+using UnityEngine.UI;
 
 public class FaxTask : Minigame
 {
-    // Removed the unused string array 'buttonSequence'
-
     // Define the list of valid keys
-    private KeyCode[] validKeys = { KeyCode.A, KeyCode.S, KeyCode.D , KeyCode.W};
+    private KeyCode[] validKeys = { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.W };
 
-    // New array to hold the expected sequence
+    // Array to hold the expected sequence
     private KeyCode[] expectedSequence;
 
-    public float delayOnWrong = 2f;
+    [Header("Audio Clips")]
     public AudioClip keyPressAudio;
     public AudioClip faxSendAudio;
     public AudioClip faxErrorAudio;
+
+    [Header("UI Elements")]
+    [Tooltip("Text element to display the next key to press.")]
+    public TextMeshPro nextKeyText; // Reference to the UI Text element
+
+    [Header("Materials")]
+    public Material noTaskMaterial;
+    public Material thereIsATaskMaterial;
+    public GameObject screen;
 
     private int currentStep = 0;
     private float delayTimer = 0f;
     private bool isDelayed = false;
     private int completions = 0;
     private AudioSource audioSource;
+    private float delayOnWrong = 1;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        // Optional: Check if nextKeyText is assigned
+        if (nextKeyText == null)
+        {
+            Debug.LogError("NextKeyText is not assigned in the Inspector.");
+        }
     }
 
     void Update()
@@ -39,6 +55,8 @@ public class FaxTask : Minigame
                 isDelayed = false;
                 delayTimer = 0f;
                 Debug.Log("Delay Over. Continue.");
+                // Optionally, reset the next key prompt after delay
+                UpdateNextKeyPrompt();
             }
             return;
         }
@@ -67,6 +85,9 @@ public class FaxTask : Minigame
 
         // Initialize and shuffle the expected sequence
         InitializeExpectedSequence();
+
+        // Update the UI prompt with the first key
+        UpdateNextKeyPrompt();
     }
 
     public override void PauseMinigame()
@@ -85,6 +106,9 @@ public class FaxTask : Minigame
 
         // Re-initialize and shuffle the expected sequence
         InitializeExpectedSequence();
+
+        // Update the UI prompt with the first key
+        UpdateNextKeyPrompt();
     }
 
     /// <summary>
@@ -136,6 +160,13 @@ public class FaxTask : Minigame
             Debug.Log($"Correct Key Pressed: {inputKey}");
             currentStep++;
             audioSource.PlayOneShot(keyPressAudio);
+
+            if (currentStep < expectedSequence.Length)
+            {
+                // Update the UI prompt to the next key
+                UpdateNextKeyPrompt();
+            }
+
             if (currentStep >= expectedSequence.Length)
             {
                 SendFax();
@@ -148,6 +179,12 @@ public class FaxTask : Minigame
             isDelayed = true;
             delayTimer = 0f;
             audioSource.PlayOneShot(faxErrorAudio);
+
+            //// Optionally, provide feedback on wrong input
+            //if (nextKeyText != null)
+            //{
+            //    nextKeyText.text = "X";
+            //}
         }
     }
 
@@ -175,7 +212,15 @@ public class FaxTask : Minigame
         else
         {
             // Task completed entirely
+            // Put the light off in the machine
+            SwitchMaterial(false);
+
             //Destroy(gameObject);
+            if (nextKeyText != null)
+            {
+                nextKeyText.text = "";
+
+            }
         }
     }
 
@@ -183,6 +228,45 @@ public class FaxTask : Minigame
     {
         // Implement failure logic if needed
         Debug.Log("Fax Machine Minigame Failed");
+
+        // Optionally, provide failure feedback
+        if (nextKeyText != null)
+        {
+            nextKeyText.text = "";
+        }
+    }
+
+    /// <summary>
+    /// Updates the UI text to display the next key the player should press.
+    /// </summary>
+    private void UpdateNextKeyPrompt()
+    {
+        if (nextKeyText == null)
+        {
+            Debug.LogWarning("NextKeyText is not assigned.");
+            return;
+        }
+
+        if (currentStep < expectedSequence.Length)
+        {
+            nextKeyText.text = $"{expectedSequence[currentStep]}";
+        }
+        else
+        {
+            nextKeyText.text = "OK";
+        }
+    }
+
+    public void SwitchMaterial(bool thereIsTask)
+    {
+        if(thereIsTask)
+        {
+            screen.GetComponent<Renderer>().material = thereIsATaskMaterial;
+        }
+        else
+        {
+            screen.GetComponent<Renderer>().material = noTaskMaterial;
+        }
     }
 }
 
@@ -191,14 +275,29 @@ public class FaxTask : Minigame
 
 //public class FaxTask : Minigame
 //{
-//    public string[] buttonSequence = { "A", "S", "D" };
-//    private KeyCode[] validKeys = { KeyCode.A, KeyCode.S, KeyCode.D };
+//    // Removed the unused string array 'buttonSequence'
+
+//    // Define the list of valid keys
+//    private KeyCode[] validKeys = { KeyCode.A, KeyCode.S, KeyCode.D , KeyCode.W};
+
+//    // New array to hold the expected sequence
+//    private KeyCode[] expectedSequence;
+
 //    public float delayOnWrong = 2f;
+//    public AudioClip keyPressAudio;
+//    public AudioClip faxSendAudio;
+//    public AudioClip faxErrorAudio;
 
 //    private int currentStep = 0;
 //    private float delayTimer = 0f;
 //    private bool isDelayed = false;
 //    private int completions = 0;
+//    private AudioSource audioSource;
+
+//    private void Awake()
+//    {
+//        audioSource = GetComponent<AudioSource>();
+//    }
 
 //    void Update()
 //    {
@@ -232,14 +331,15 @@ public class FaxTask : Minigame
 
 //    public override void StartMinigame()
 //    {
-
-
 //        // Initialize minigame
 //        currentStep = 0;
 //        isDelayed = false;
 //        delayTimer = 0f;
 //        completions = 0;
 //        Debug.Log("Fax Machine Minigame Started");
+
+//        // Initialize and shuffle the expected sequence
+//        InitializeExpectedSequence();
 //    }
 
 //    public override void PauseMinigame()
@@ -255,17 +355,64 @@ public class FaxTask : Minigame
 //        delayTimer = 0f;
 //        completions = 0;
 //        Debug.Log("Fax Machine Minigame Reset");
+
+//        // Re-initialize and shuffle the expected sequence
+//        InitializeExpectedSequence();
+//    }
+
+//    /// <summary>
+//    /// Initializes and shuffles the expected key sequence.
+//    /// </summary>
+//    private void InitializeExpectedSequence()
+//    {
+//        // Clone the validKeys array to avoid modifying the original
+//        expectedSequence = (KeyCode[])validKeys.Clone();
+
+//        // Shuffle the expectedSequence array
+//        ShuffleArray(expectedSequence);
+
+//        // Log the shuffled sequence for debugging
+//        string sequenceLog = "Expected Sequence: ";
+//        foreach (KeyCode key in expectedSequence)
+//        {
+//            sequenceLog += key.ToString() + " ";
+//        }
+//        Debug.Log(sequenceLog);
+//    }
+
+//    /// <summary>
+//    /// Implements the Fisher-Yates shuffle algorithm to randomize the array.
+//    /// </summary>
+//    /// <param name="array">The array to shuffle.</param>
+//    private void ShuffleArray(KeyCode[] array)
+//    {
+//        for (int i = array.Length - 1; i > 0; i--)
+//        {
+//            int j = Random.Range(0, i + 1);
+//            // Swap elements at positions i and j
+//            KeyCode temp = array[i];
+//            array[i] = array[j];
+//            array[j] = temp;
+//        }
 //    }
 
 //    private void CheckInput(KeyCode inputKey)
 //    {
-//        if (inputKey == validKeys[currentStep])
+//        if (currentStep >= expectedSequence.Length)
+//        {
+//            Debug.LogError("Current step exceeds the expected sequence length.");
+//            return;
+//        }
+
+//        if (inputKey == expectedSequence[currentStep])
 //        {
 //            Debug.Log($"Correct Key Pressed: {inputKey}");
 //            currentStep++;
-//            if (currentStep >= validKeys.Length)
+//            audioSource.PlayOneShot(keyPressAudio);
+//            if (currentStep >= expectedSequence.Length)
 //            {
 //                SendFax();
+//                audioSource.PlayOneShot(faxSendAudio);
 //            }
 //        }
 //        else
@@ -273,6 +420,7 @@ public class FaxTask : Minigame
 //            Debug.Log($"Wrong Key Pressed: {inputKey}");
 //            isDelayed = true;
 //            delayTimer = 0f;
+//            audioSource.PlayOneShot(faxErrorAudio);
 //        }
 //    }
 

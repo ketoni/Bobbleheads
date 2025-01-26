@@ -22,14 +22,17 @@ public class EmailTask : Minigame
         if (!IsActive())
             return;
 
-        if (!isBarFilled && Input.anyKeyDown)
+        if(TaskManager.Instance.player.GetComponent<Player3D>().inGame == false)
         {
-            MashKeys();
-        }
+            if (!isBarFilled && Input.anyKeyDown)
+            {
+                MashKeys();
+            }
 
-        if (isBarFilled && Input.GetKeyDown(KeyCode.Return))
-        {
-            SendEmail();
+            if (isBarFilled && Input.GetKeyDown(KeyCode.Return))
+            {
+                SendEmail();
+            }
         }
     }
 

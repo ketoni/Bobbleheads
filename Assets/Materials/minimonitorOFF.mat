@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: minimonitor
+  m_Name: minimonitorOFF
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 201aed2de4f74e24ea792d7a04dde175, type: 2}
+  m_Parent: {fileID: 2100000, guid: 69f1febef14b39e4dbb527f39b233c3b, type: 2}
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords:
   - _EMISSION
@@ -41,7 +41,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
     - _Color: {r: 0.37735847, g: 0.37735847, b: 0.37735847, a: 1}
-    - _EmissionColor: {r: 0.124663055, g: 0.4716981, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2709827841393423648
