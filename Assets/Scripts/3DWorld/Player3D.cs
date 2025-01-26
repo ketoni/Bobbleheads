@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using System;
 
 public class Player3D : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Player3D : MonoBehaviour
     private Vector3 gameOverPosition = new Vector3(-13.9f, 0f, 8.886f);
     private float zoomSpeed = 1;
 
-    private Task currentHoveredTask = null;
+    private TaskTarget currentHoveredTarget = null;
 
     void Start()
     {
@@ -73,39 +74,36 @@ public class Player3D : MonoBehaviour
     {
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
-
         if (Physics.Raycast(ray, out hit))
         {
-            Task task = hit.collider.GetComponent<Task>();
-            if (task != null && task.quantity > 0)
+            TaskTarget target = hit.collider.GetComponent<TaskTarget>();
+            if (target != null)
             {
-                if (currentHoveredTask != task)
+                // Found target
+                if (target.task == null)
                 {
-                    if (currentHoveredTask != null)
+                    throw new NullReferenceException("TaskTaget has no task!");
+                }
+                if (currentHoveredTarget != target)
+                {
+                    // Found other one
+                    if (currentHoveredTarget != null)
                     {
-                        currentHoveredTask.Deactivate();
+                        currentHoveredTarget.task.Deactivate();
                     }
 
-                    currentHoveredTask = task;
-                    currentHoveredTask.Activate();
+                    currentHoveredTarget = target;
+                    currentHoveredTarget.task.Activate();
                 }
-            }
-            else
-            {
-                if (currentHoveredTask != null)
-                {
-                    currentHoveredTask.Deactivate();
-                    currentHoveredTask = null;
-                }
+                return;
             }
         }
-        else
+
+        // Otherwise deactivate the current
+        if (currentHoveredTarget != null)
         {
-            if (currentHoveredTask != null)
-            {
-                currentHoveredTask.Deactivate();
-                currentHoveredTask = null;
-            }
+            currentHoveredTarget.task.Deactivate();
+            currentHoveredTarget = null;
         }
     }
 
