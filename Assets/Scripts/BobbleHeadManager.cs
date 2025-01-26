@@ -24,7 +24,6 @@ public class BobbleHeadManager : MonoBehaviour
     private List<GameObject> characters;
 
     public bool paused = true;
-    public AudioClip testAudio;
 
     private bool gameStarted = false;
     private GameObject playerHead;
@@ -32,6 +31,15 @@ public class BobbleHeadManager : MonoBehaviour
     private float punishTimer = 1000f;
 
     public float LosingPunishTime = 11f;
+    public AudioClip bubblePopAudio;
+    public AudioClip throwDartAudio;
+
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,11 +78,11 @@ public class BobbleHeadManager : MonoBehaviour
     void Update()
     {
         paused = defaultScreen.activeSelf || adBreak.activeSelf || startGameScreen.activeSelf;
-        if(!paused)
+        if (!paused)
         {
             Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
             timer += Time.deltaTime;
-            if(timer > spawnCooldown)
+            if (timer > spawnCooldown)
             {
                 SpawnEnemy();
             }
@@ -83,8 +91,8 @@ public class BobbleHeadManager : MonoBehaviour
         {
             Physics2D.simulationMode = SimulationMode2D.Script;
             punishTimer += Time.deltaTime;
-            int timeLeft = (int)(LosingPunishTime-punishTimer);
-            if(timeLeft > 0)
+            int timeLeft = (int)(LosingPunishTime - punishTimer);
+            if (timeLeft > 0)
             {
                 // Ads
                 adCounterText.text = timeLeft + "s";
@@ -110,11 +118,16 @@ public class BobbleHeadManager : MonoBehaviour
     public void RemoveEnemy(GameObject enemy)
     {
         characters.Remove(enemy);
+        audioSource.PlayOneShot(bubblePopAudio);
+    }
+
+    public void PlayThrowDartAudio() {
+        audioSource.PlayOneShot(throwDartAudio);
     }
 
     private void OnQuitPerformed(InputAction.CallbackContext context)
     {
-        
+
         defaultScreen.SetActive(true);
     }
 
@@ -125,9 +138,9 @@ public class BobbleHeadManager : MonoBehaviour
 
     private void OnLeftClickPerformed(InputAction.CallbackContext context)
     {
-        if(paused && !defaultScreen.activeSelf)
+        if (paused && !defaultScreen.activeSelf)
         {
-            if(!gameStarted)
+            if (!gameStarted)
             {
                 StartGame();
                 gameStarted = true;
@@ -155,6 +168,7 @@ public class BobbleHeadManager : MonoBehaviour
         punishTimer = 0;
         gameStarted = false;
         adBreak.SetActive(true);
+        audioSource.PlayOneShot(bubblePopAudio);
     }
 
     public void EnterGame()

@@ -72,7 +72,7 @@ public class EmailTask : Minigame
         {
             progressBar.value += progressIncrement;
             Debug.Log($"Progress Bar Increased: {progressBar.value}");
-            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(keyPressAudio);
             audioSource.pitch = 1;
 

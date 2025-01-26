@@ -156,6 +156,7 @@ public class ArmBehavior : MonoBehaviour
             float angle = Mathf.Atan2(avgSpd.y, avgSpd.x) * Mathf.Rad2Deg;
             dart.transform.rotation = Quaternion.Euler(0, 0, angle-90);
             coolDownCounter = throwCoolDown;
+            gameManager.PlayThrowDartAudio();
         }
     }
 }
