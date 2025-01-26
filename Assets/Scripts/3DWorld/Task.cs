@@ -129,11 +129,14 @@ public class Task : MonoBehaviour
 
         if (quantity <= 0)
         {
+<<<<<<< Updated upstream
+=======
             quantity = 0;
 
             currentMinigame.gameObject.GetComponent<HighlightObject>().SetScaling(false);
             currentMinigame.gameObject.GetComponent<Outline>().enabled = false;
 
+>>>>>>> Stashed changes
             Debug.Log($"{taskType} task completed.");
             //Destroy(gameObject);
             currentMinigame.ResetMinigame();
