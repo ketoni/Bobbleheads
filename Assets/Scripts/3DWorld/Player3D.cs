@@ -133,11 +133,12 @@ public class Player3D : MonoBehaviour
 	dead = true;
         transform.DOMove(gameOverPosition, 2);
         transform.DORotate(new Vector3(0f, 140f, 0f), 1);
-        mainCamera.transform.DORotate(new Vector3(40f, 135f, 0f), 1);
+        mainCamera.transform.DORotate(new Vector3(40f, 135f, 28f), 1);
         gameOverScreen.SetActive(true);
     }
     
     public void Winning() {
+	if (dead) return;
         victory = true;
         winningText.SetActive(true);
  	winningPanel.SetActive(true);
