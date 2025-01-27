@@ -9,6 +9,7 @@ public class EnemyLogic : MonoBehaviour
     void Start()
     {
         gameManager = FindFirstObjectByType<BobbleHeadManager>();
+        moveSpeed = moveSpeed * Random.Range(0.95f, 1.05f);
     }
 
     // Update is called once per frame

@@ -1,16 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BobbleHeadManager : MonoBehaviour
 {
-    // public static BobbleHeadManager Instance { get; private set; }
-    public InputActionAsset inputActions;
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
     public float spawnCooldown;
 
     public Transform[] spawnLocations;
@@ -42,32 +37,15 @@ public class BobbleHeadManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    // void Awake()
-    // {
-    //     Instance = this;
-    // }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        timer = spawnCooldown;
         defaultScreen.SetActive(true);
         adBreak.SetActive(false);
         adCounterText.gameObject.SetActive(false);
         startGameScreen.SetActive(false);
         playerHead = GameObject.Find("PlayerHead");
-        // Find the action map and action for pausing
-        var actionMap = inputActions.FindActionMap("Player");
-        var pauseAction = actionMap.FindAction("EnterGame");
-        if (pauseAction != null)
-        {
-            pauseAction.performed += OnGameEnterPerformed;
-            pauseAction.Enable();
-        }
-        pauseAction = actionMap.FindAction("Throw");
-        if (pauseAction != null)
-        {
-            pauseAction.performed += OnLeftClickPerformed;
-            pauseAction.Enable();
-        }
         characters = new List<GameObject>
         {
             GameObject.Find("Player")
@@ -86,6 +64,7 @@ public class BobbleHeadManager : MonoBehaviour
             {
                 SpawnEnemy();
             }
+            
         }
         else
         {
@@ -105,14 +84,21 @@ public class BobbleHeadManager : MonoBehaviour
                 startGameScreen.SetActive(true);
             }
         }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            OnLeftClickPerformed();
+        }
     }
 
     private void SpawnEnemy()
     {
         float minY = spawnLocations[1].position.y;
         float maxY = spawnLocations[0].position.y;
-        float randomY = UnityEngine.Random.Range(minY, maxY);
-        var enemy = Instantiate(enemyPrefab, new Vector3(spawnLocations[0].position.x, randomY, spawnLocations[0].position.z), quaternion.identity);
+        float randomY = -2f;
+        int randomEnemy = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+        if (randomEnemy == 0) randomY = UnityEngine.Random.Range(minY, maxY);
+        var enemy = Instantiate(enemyPrefabs[randomEnemy], new Vector3(spawnLocations[0].position.x, randomY, spawnLocations[0].position.z), quaternion.identity);
         characters.Add(enemy);
         timer = 0;
     }
@@ -127,13 +113,7 @@ public class BobbleHeadManager : MonoBehaviour
         audioSource.PlayOneShot(throwDartAudio);
     }
 
-    private void OnGameEnterPerformed(InputAction.CallbackContext context)
-    {
-        // if(defaultScreen.activeSelf) EnterGame();
-        // else Exit();
-    }
-
-    private void OnLeftClickPerformed(InputAction.CallbackContext context)
+    private void OnLeftClickPerformed()
     {
         if (paused && !defaultScreen.activeSelf)
         {

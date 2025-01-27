@@ -32,6 +32,8 @@ public class ArmBehavior : MonoBehaviour
     private Vector2 IKInput;
     public float mouseMoveSpeed = 0.0001f;
 
+    private bool leftClick = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,12 +45,20 @@ public class ArmBehavior : MonoBehaviour
         SpawnDart();
         upperArm = transform;
         lowerArm = transform.GetChild(0);
-        playerInput = transform.parent.parent.parent.parent.parent.GetComponent<PlayerInput>();
         armLength = transform.parent.GetComponent<SpriteRenderer>().bounds.size.y;
+    }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            leftClick = true;
+        }
     }
 
     private void FixedUpdate()
     {
+        
         if(!gameManager.paused)
         {
             MoveArms();
@@ -66,10 +76,8 @@ public class ArmBehavior : MonoBehaviour
 
     private void MoveArms()
     {
-        Vector2 moveInput = playerInput.actions["Look"].ReadValue<Vector2>();
-        Vector2 deltaPos = moveInput;
-        lastMousePos = moveInput;
-        IKInput += deltaPos * mouseMoveSpeed;
+        Vector2 moveInput = Input.mousePositionDelta;
+        IKInput += moveInput * mouseMoveSpeed;
 
         if(IKInput.magnitude > 1) IKInput.Normalize();
 
@@ -135,11 +143,11 @@ public class ArmBehavior : MonoBehaviour
         {
             coolDownCounter--;
             if(coolDownCounter == 0) SpawnDart();
-            return;
+            else return;
         }
 
         // throw dart
-        if(playerInput.actions["Throw"].IsPressed())
+        if(leftClick)
         {
             Vector2 avgSpd = Vector2.zero;
             for(int i = 0; i < handPositionFrames; i++)
@@ -155,6 +163,7 @@ public class ArmBehavior : MonoBehaviour
             dart.transform.rotation = Quaternion.Euler(0, 0, angle);
             coolDownCounter = throwCoolDown;
             gameManager.PlayThrowDartAudio();
+            leftClick = false;
         }
     }
 }

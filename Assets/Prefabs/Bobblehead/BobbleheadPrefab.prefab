@@ -958,8 +958,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480c72b9f0c98d242915c1c463794637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 8ba5fad32114a404fbe3c6d8f614adbe, type: 3}
-  enemyPrefab: {fileID: 8968673608635922477, guid: bac9cf761548c5c4ca6231badb50ea5a, type: 3}
+  enemyPrefabs:
+  - {fileID: 8968673608635922477, guid: bac9cf761548c5c4ca6231badb50ea5a, type: 3}
+  - {fileID: 7470395146271292777, guid: 126878a87bcbb404a968cdd64569b666, type: 3}
   spawnCooldown: 3
   spawnLocations:
   - {fileID: 9072449729196674160}
@@ -2379,7 +2380,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5146733846044880487, guid: d60a79fa3151d4b46a77e57ccb2a0394, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

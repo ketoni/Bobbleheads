@@ -10,6 +10,7 @@ public class AirEnemyLogic : MonoBehaviour
     {
         gameManager = FindFirstObjectByType<BobbleHeadManager>();
         target = GameObject.Find("PlayerHead").transform;
+        moveSpeed = moveSpeed * Random.Range(0.95f, 1.05f);
     }
 
     // Update is called once per frame
