@@ -18902,8 +18902,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 800606898}
     - target: {fileID: 491164939915606565, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: startMinute
+      value: 57
+      objectReference: {fileID: 0}
+    - target: {fileID: 491164939915606565, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: startSecond
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491164939915606565, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: winconSeconds
-      value: 600
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 734435572703582796, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_Name
@@ -18916,6 +18924,10 @@ PrefabInstance:
     - target: {fileID: 1431230003990918581, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.0005187988
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551206521989489146, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
+      propertyPath: randomTaskInterval
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2998678369387991818, guid: 7da27050cc735fe4e9a3ca9d5378063e, type: 3}
       propertyPath: taskPopup

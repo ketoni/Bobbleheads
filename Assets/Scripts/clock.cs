@@ -16,11 +16,13 @@ public class Clock : MonoBehaviour
     public Wincon winning;
     public int winconSeconds = 0;
     float survivedSeconds = 0;
+    float originalTaskInterval;
 
     void Start()
     {
         // Calculate the total elapsed seconds since midnight for the predefined time
         elapsedTime = startHour * 3600f + startMinute * 60f + startSecond;
+        originalTaskInterval = TaskManager.Instance.randomTaskInterval;
     }
 
     void Update()
@@ -55,6 +57,63 @@ public class Clock : MonoBehaviour
         {
             wincon = true;
             winning.Winnered();
-        } 
+        }
+
+        AdjustRandomTaskInterval(survivedSeconds, winconSeconds);
     }
+
+
+    public void AdjustRandomTaskInterval(float clockElapsedTime, float winningTime)
+    {
+        float percentElapsed = (clockElapsedTime / winningTime) * 100f;
+        float newInterval = originalTaskInterval;
+
+        if (percentElapsed >= 100f)
+        {
+            newInterval = 1000f;
+        }
+        else if (percentElapsed >= 95f)
+        {
+            newInterval = newInterval * 0.1f;
+        }
+        else if (percentElapsed >= 90f)
+        {
+            newInterval = newInterval * 0.2f;
+        }
+        else if (percentElapsed >= 80f)
+        {
+            newInterval = newInterval * 0.6f;
+        }
+        else if (percentElapsed >= 70f)
+        {
+            newInterval = newInterval * 0.3f;
+        }
+        else if (percentElapsed >= 60f)
+        {
+            newInterval = newInterval * 0.9f;
+        }
+        else if (percentElapsed >= 50f)
+        {
+            newInterval = newInterval * 0.5f;
+        }
+        else if (percentElapsed >= 40f)
+        {
+            newInterval = newInterval * 0.8f;
+        }
+        else if (percentElapsed >= 30f)
+        {
+            newInterval = newInterval * 0.5f;
+        }
+        else if (percentElapsed >= 20f)
+        {
+            newInterval = newInterval * 0.9f;
+        }
+        else if (percentElapsed >= 10f)
+        {
+            newInterval = newInterval * 0.9f;
+        }
+
+        TaskManager.Instance.randomTaskInterval = newInterval;
+    }
+
 }
