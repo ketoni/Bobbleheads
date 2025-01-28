@@ -976,7 +976,13 @@ MonoBehaviour:
   mouseSensitivity: 100
   minHorizontalAngle: -80
   maxHorizontalAngle: 80
+  dead: 0
+  victory: 0
+  gameOverScreen: {fileID: 0}
+  winningText: {fileID: 0}
+  winningPanel: {fileID: 0}
   inGame: 1
+  currentHoveredTarget: {fileID: 0}
 --- !u!1 &2793394429578280879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,10 +1046,10 @@ RectTransform:
   - {fileID: 1431230003990918581}
   m_Father: {fileID: 6787214669601516900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -8.4326, y: -1.032}
+  m_SizeDelta: {x: 973, y: 17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3369071830035988437
 GameObject:
@@ -1201,6 +1207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46452501769414e4d9cda4cc220926ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   stress: 0
   maxStress: 100
   decreaseAmount: 10
@@ -1275,6 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4636383239159ab41b82cfb2665a23ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &4685849879488751036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,8 +1517,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 33}
-  m_SizeDelta: {x: 528, y: 25}
+  m_AnchoredPosition: {x: 60.412, y: 106.837}
+  m_SizeDelta: {x: 1058, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5727012687239982975
 MonoBehaviour:
@@ -1774,8 +1782,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_AnchoredPosition: {x: 0.0005187988, y: 0}
+  m_SizeDelta: {x: -0.0010376, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1497614274237293562
 CanvasRenderer:
@@ -1805,8 +1813,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 2409907044cbe134e8a18510b32f4e48, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1848,8 +1856,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: -8.323975, y: -0.7229996}
+  m_SizeDelta: {x: -84.918, y: -17.554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6350150374686593291
 GameObject:
@@ -2469,7 +2477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3840256303910266673
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2559,10 +2567,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6787214669601516900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1058, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &220283823339586363
 CanvasRenderer:
@@ -2585,15 +2593,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b1287218606d5454ab50407d6fbfc30e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2987,6 +2995,7 @@ MonoBehaviour:
   quantity: 0
   test: 1
   taskText: {fileID: 7646332019212756963}
+  taskPopup: {fileID: 0}
   taskAddedAudio: {fileID: 8300000, guid: 67ad1aa99133f40d6896b7a2e3c06120, type: 3}
 --- !u!82 &2399723426669793466
 AudioSource:

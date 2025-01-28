@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +27,7 @@ public class EmailTask : Minigame
 
         if(TaskManager.Instance.player.GetComponent<Player3D>().inGame == false)
         {
-            if (!isBarFilled && Input.anyKeyDown)
+            if (!isBarFilled && Input.anyKeyDown && GetComponent<Task>().quantity > 0)
             {
                 MashKeys();
             }
@@ -74,13 +75,27 @@ public class EmailTask : Minigame
 
     private void MashKeys()
     {
+        bool foundKey = false;
+         // Loop through all keys to check if any of them is pressed
+        foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            // Ignore mouse buttons and joystick buttons
+            if (Input.GetKeyDown(key) && !IsMouseButton(key) && !IsJoystickButton(key))
+            {
+                foundKey = true;
+                break;
+            }
+        }
+
+        // Player pressed something else than keyboard buttons
+        if(!foundKey) return;
+
         if (progressBar != null)
         {
             progressBar.value += progressIncrement;
             Debug.Log($"Progress Bar Increased: {progressBar.value}");
             audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(keyPressAudio);
-            audioSource.pitch = 1;
             charAmount--;
             FindFirstObjectByType<BobbleHeadManager>().UpdateEmailCharAmount(charAmount.ToString());
 
@@ -95,6 +110,18 @@ public class EmailTask : Minigame
         {
             Debug.LogError("ProgressBar is not assigned in EmailTask.");
         }
+    }
+
+    // Helper method to check if the key is a mouse button
+    private bool IsMouseButton(KeyCode key)
+    {
+        return key >= KeyCode.Mouse0 && key <= KeyCode.Mouse6;
+    }
+
+    // Helper method to check if the key is a joystick button
+    private bool IsJoystickButton(KeyCode key)
+    {
+        return key >= KeyCode.JoystickButton0 && key <= KeyCode.JoystickButton19;
     }
 
     private void SendEmail()
@@ -129,7 +156,7 @@ public class EmailTask : Minigame
         else
         {
             // Task completed entirely
-            //Destroy(gameObject);
+            FindFirstObjectByType<BobbleHeadManager>().UpdateEmailCharAmount("?");
         }
     }
 

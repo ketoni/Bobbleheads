@@ -17,7 +17,8 @@ public class DartBehavior : MonoBehaviour
         {
             bubble.Pop();
             Destroy(gameObject);
-            StressManager.Instance.DecreaseStress(10f);
+            // StressManager.Instance.DecreaseStress(10f);
+            StressManager.Instance.MultiplyStress(0.80f);
         }
     }
 }

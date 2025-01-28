@@ -49,12 +49,6 @@ public class StressManager : MonoBehaviour
         {
             GameOver();
         }
-
-        // Decrease stress when spacebar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DecreaseStress(decreaseAmount);
-        }
     }
 
     private void UpdateStressMultiplier()
@@ -80,6 +74,13 @@ public class StressManager : MonoBehaviour
     public void DecreaseStress(float amount)
     {
         stress -= amount;
+        stress = Mathf.Clamp(stress, 0f, maxStress);
+        UpdateStressBar();
+    }
+
+    public void MultiplyStress(float amount)
+    {
+        stress *= amount;
         stress = Mathf.Clamp(stress, 0f, maxStress);
         UpdateStressBar();
     }

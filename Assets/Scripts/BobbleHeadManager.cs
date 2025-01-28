@@ -11,6 +11,7 @@ public class BobbleHeadManager : MonoBehaviour
     public Transform[] spawnLocations;
 
     private float timer = 0;
+    private float initialSpawnCD;
     public GameObject defaultScreen;
     public GameObject adBreak;
     public TextMeshPro adCounterText;
@@ -40,6 +41,7 @@ public class BobbleHeadManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        initialSpawnCD = spawnCooldown;
         timer = spawnCooldown;
         defaultScreen.SetActive(true);
         adBreak.SetActive(false);
@@ -93,6 +95,10 @@ public class BobbleHeadManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        spawnCooldown *= 0.99f;
+        spawnCooldown = spawnCooldown < 0.5f ? 0.5f : spawnCooldown;
+        
+        Debug.Log("spawnCooldown: "+spawnCooldown);
         float minY = spawnLocations[1].position.y;
         float maxY = spawnLocations[0].position.y;
         float randomY = -2f;
@@ -131,11 +137,12 @@ public class BobbleHeadManager : MonoBehaviour
 
     public void StartGame()
     {
+        spawnCooldown = initialSpawnCD;
         playerHead.SetActive(true);
         for (int i = characters.Count - 1; i >= 1; i--)
         {
             Destroy(characters[i]);
-            characters.RemoveAt(i); // Optionally, if you need to update the list
+            characters.RemoveAt(i);
         }
         startGameScreen.SetActive(false);
     }
@@ -152,6 +159,8 @@ public class BobbleHeadManager : MonoBehaviour
     public void EnterGame()
     {
         defaultScreen.SetActive(false);
+        if(gameStarted) startGameScreen.GetComponentInChildren<TextMeshPro>().text = "Left-Click to Resume";
+        else startGameScreen.GetComponentInChildren<TextMeshPro>().text = "Left-Click to Start";
         MusicManager.Instance.Play2DGameMusic();
     }
 
@@ -164,7 +173,14 @@ public class BobbleHeadManager : MonoBehaviour
     public void UpdateEmailAmount(int amount)
     {
         emailCountText.GetComponent<TextMeshPro>().text = amount.ToString();
-        if(amount == 0) emailCharCountText.GetComponent<TextMeshPro>().text = "?";
+        if(amount == 0)
+        {
+            emailCharCountText.GetComponent<TextMeshPro>().text = "?";
+        } 
+        else if(emailCharCountText.GetComponent<TextMeshPro>().text == "?")
+        {
+            emailCharCountText.GetComponent<TextMeshPro>().text = "20";
+        }
     }
 
     public void UpdateEmailCharAmount(string text)
