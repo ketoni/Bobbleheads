@@ -151,7 +151,6 @@ public class Task : MonoBehaviour
     public void CompleteTask()
     {
         quantity--;
-        UpdateTaskUI();
 
         if (quantity <= 0)
         {
@@ -164,6 +163,9 @@ public class Task : MonoBehaviour
             //Destroy(gameObject);
             currentMinigame.ResetMinigame();
         }
+
+        UpdateTaskUI();
+
     }
 
     // Update the UI Text for this task

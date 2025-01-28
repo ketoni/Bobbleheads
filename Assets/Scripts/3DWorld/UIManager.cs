@@ -20,6 +20,11 @@ public class UIManager : MonoBehaviour
     public GameObject emailTaskUI;
     public GameObject stampTaskUI;
 
+    //[Header("Buttons")]
+    //public Button restart;
+    //public Button start;
+
+
     void Awake()
     {
         if (Instance == null)
@@ -91,4 +96,6 @@ public class UIManager : MonoBehaviour
     {
         SetInstruction(defaultInstruction);
     }
+
 }
+

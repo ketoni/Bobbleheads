@@ -15,6 +15,7 @@ public class StressManager : MonoBehaviour
 
     // UI element to represent the stress bar
     public Slider stressBar;
+    private bool gameOver = false;
 
     void Awake()
     {
@@ -48,6 +49,18 @@ public class StressManager : MonoBehaviour
         if (stress >= maxStress)
         {
             GameOver();
+        }
+
+        if (gameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneController.Instance.RestartGame();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneController.Instance.QuitGame();
+            }
         }
     }
 
@@ -95,6 +108,7 @@ public class StressManager : MonoBehaviour
 
     private void GameOver()
     {
+        gameOver = true;
         player.GetComponent<Player3D>().GameOver();
     }
 }
