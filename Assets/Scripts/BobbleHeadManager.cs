@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class BobbleHeadManager : MonoBehaviour
     public GameObject startGameScreen;
     public GameObject emailCountText;
     public GameObject emailCharCountText;
+    public GameObject howToPlayObject;
     private List<GameObject> characters;
 
     public bool paused = true;
@@ -47,6 +49,7 @@ public class BobbleHeadManager : MonoBehaviour
         adBreak.SetActive(false);
         adCounterText.gameObject.SetActive(false);
         startGameScreen.SetActive(false);
+        howToPlayObject.SetActive(false);
         playerHead = GameObject.Find("PlayerHead");
         characters = new List<GameObject>
         {
@@ -131,6 +134,7 @@ public class BobbleHeadManager : MonoBehaviour
             else
             {
                 startGameScreen.SetActive(false);
+                howToPlayObject.SetActive(true);
             }
         }
     }
@@ -145,10 +149,16 @@ public class BobbleHeadManager : MonoBehaviour
             characters.RemoveAt(i);
         }
         startGameScreen.SetActive(false);
+        howToPlayObject.SetActive(true);
+        var ok = DOTween.Sequence();
+        howToPlayObject.transform.GetChild(0).GetComponent<TextMeshPro>().alpha = 1;
+        ok.AppendInterval(2f);
+        ok.Append(howToPlayObject.transform.GetChild(0).GetComponent<TextMeshPro>().DOFade(0, 2f));
     }
 
     public void Lose()
     {
+        howToPlayObject.SetActive(false);
         punishTimer = 0;
         gameStarted = false;
         adBreak.SetActive(true);
@@ -166,6 +176,7 @@ public class BobbleHeadManager : MonoBehaviour
 
     public void Exit()
     {
+        howToPlayObject.SetActive(false);
         defaultScreen.SetActive(true);
         MusicManager.Instance.Play3DWorldMusic();
     }
