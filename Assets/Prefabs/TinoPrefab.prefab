@@ -2944,6 +2944,7 @@ MonoBehaviour:
   nextKeyText: {fileID: 4206241563267703511}
   noTaskMaterial: {fileID: 2100000, guid: 201aed2de4f74e24ea792d7a04dde175, type: 2}
   thereIsATaskMaterial: {fileID: 2100000, guid: c5af29263d2eb424085b176d9d37f1f8, type: 2}
+  wrongButtonMaterial: {fileID: 2100000, guid: 2e7b6917c2d2145498ffe7a4c70d3cad, type: 2}
   screen: {fileID: 6022865591652386312}
 --- !u!114 &3156992208663535472
 MonoBehaviour:

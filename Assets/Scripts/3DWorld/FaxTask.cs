@@ -22,6 +22,7 @@ public class FaxTask : Minigame
     [Header("Materials")]
     public Material noTaskMaterial;
     public Material thereIsATaskMaterial;
+    public Material wrongButtonMaterial;
     public GameObject screen;
 
     private int currentStep = 0;
@@ -55,8 +56,8 @@ public class FaxTask : Minigame
                 isDelayed = false;
                 delayTimer = 0f;
                 Debug.Log("Delay Over. Continue.");
-                // Optionally, reset the next key prompt after delay
-                UpdateNextKeyPrompt();
+                // Switch back material
+                SwitchMaterial(true);
             }
             return;
         }
@@ -179,6 +180,7 @@ public class FaxTask : Minigame
             isDelayed = true;
             delayTimer = 0f;
             audioSource.PlayOneShot(faxErrorAudio);
+            screen.GetComponent<Renderer>().material = wrongButtonMaterial;
 
             //// Optionally, provide feedback on wrong input
             //if (nextKeyText != null)
