@@ -106,6 +106,12 @@ public class TaskManager : MonoBehaviour
         return total;
     }
 
+    public void GameOver()
+    {
+        activeTasks.Clear();
+        StopCoroutine(AddRandomTaskRoutine());
+    }
+
     // Coroutine to add a random task every 10 seconds
     private IEnumerator AddRandomTaskRoutine()
     {

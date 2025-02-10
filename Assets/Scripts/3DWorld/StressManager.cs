@@ -19,6 +19,7 @@ public class StressManager : MonoBehaviour
 
     void Awake()
     {
+        stress = maxStress * 0.75f;
         if (Instance == null)
         {
             Instance = this;
@@ -110,5 +111,6 @@ public class StressManager : MonoBehaviour
     {
         gameOver = true;
         player.GetComponent<Player3D>().GameOver();
+        TaskManager.Instance.GameOver();
     }
 }
