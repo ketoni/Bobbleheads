@@ -19,7 +19,6 @@ public class StressManager : MonoBehaviour
 
     void Awake()
     {
-        stress = maxStress * 0.75f;
         if (Instance == null)
         {
             Instance = this;

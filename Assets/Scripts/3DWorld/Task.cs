@@ -52,12 +52,12 @@ public class Task : MonoBehaviour
     }
 
     // Activate the task's minigame
-    public void Activate()
+    public bool Activate()
     {
         if (quantity <= 0)
         {
             Debug.Log($"Cannot activate {taskType}. Quantity is 0.");
-            return;
+            return false;
         }
 
         if (currentMinigame == null)
@@ -79,6 +79,7 @@ public class Task : MonoBehaviour
         taskPopup.SetActive(true);
 
         Debug.Log($"{taskType} minigame activated.");
+        return true;
     }
 
     // Deactivate the task's minigame

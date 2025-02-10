@@ -99,8 +99,8 @@ public class Player3D : MonoBehaviour
                         currentHoveredTarget.task.Deactivate();
                     }
 
-                    currentHoveredTarget = target;
-                    currentHoveredTarget.task.Activate();
+                    bool success = target.task.Activate();
+                    if(success) currentHoveredTarget = target;
                 }
                 return;
             }
