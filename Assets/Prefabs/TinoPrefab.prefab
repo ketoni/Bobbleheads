@@ -3390,6 +3390,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3571192102308679711}
     - target: {fileID: 7972665974449198374, guid: a07aa59659d6b49cc824b847dbef82f0, type: 3}
+      propertyPath: paperStack
+      value: 
+      objectReference: {fileID: 1690162005250072554}
+    - target: {fileID: 7972665974449198374, guid: a07aa59659d6b49cc824b847dbef82f0, type: 3}
       propertyPath: stampAudio
       value: 
       objectReference: {fileID: 8300000, guid: ea98afb1b5a9447698ea5b780a0f2eff, type: 3}

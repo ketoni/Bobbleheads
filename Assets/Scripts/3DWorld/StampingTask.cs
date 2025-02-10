@@ -12,14 +12,26 @@ public class StampingTask : Minigame
     public GameObject originalPos;
     public GameObject activePos;
     public GameObject slamPos;
+    public GameObject paperStack;
+
+    private Task task;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        task = GetComponent<Task>();
     }
 
     void Update()
     {
+        if(task.quantity > 0)
+        {
+            paperStack.SetActive(true);
+        }
+        else
+        {
+            paperStack.SetActive(false);
+        }
         if (!IsActive())
             return;
 
@@ -87,7 +99,6 @@ public class StampingTask : Minigame
     public override void CompleteMinigame()
     {
         completions++;
-        Task task = GetComponent<Task>();
         if (task != null)
         {
             task.CompleteTask();
