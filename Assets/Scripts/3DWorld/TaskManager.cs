@@ -136,7 +136,7 @@ public class TaskManager : MonoBehaviour
 
         var target = player.GetComponent<Player3D>().currentHoveredTarget;
 
-        if (target != null && target.task != randomTask)
+        if (target == null || (target != null && target.task != randomTask))
         {
             randomTask.gameObject.GetComponent<HighlightObject>().SetScaling(true);
             randomTask.gameObject.GetComponent<Outline>().enabled = true;

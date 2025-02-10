@@ -44,7 +44,7 @@ public class HighlightObject : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             // Calculate the new Y scale using sine wave
-            float sineValue = Mathf.Sin(2 * Mathf.PI * frequency * elapsedTime);
+            float sineValue = -Mathf.Cos(2 * Mathf.PI * frequency * elapsedTime);
             float newYScale = midYScale + sineValue * amplitude;
 
             // Apply the new Y scale while keeping X and Z scales unchanged
@@ -71,9 +71,9 @@ public class HighlightObject : MonoBehaviour
             elapsedTime = 0f;
 
             // Optionally, reset the scale to midYScale to avoid abrupt changes
-            Vector3 newScale = transform.localScale;
-            newScale.y = midYScale;
-            transform.localScale = newScale;
+            // Vector3 newScale = transform.localScale;
+            // newScale.y = midYScale;
+            // transform.localScale = newScale;
         }
     }
 
