@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTaskQuantity(Task.TaskType taskType, int quantity)
     {
+        print(quantity);
         switch (taskType)
         {
             case Task.TaskType.FaxMachine:

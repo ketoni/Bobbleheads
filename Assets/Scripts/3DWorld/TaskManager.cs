@@ -11,6 +11,7 @@ public class TaskManager : MonoBehaviour
     public GameObject stampTask;
     public GameObject faxTask;
     public GameObject emailTask;
+    public GameObject StressArrows;
 
     // List of all registered tasks
     private List<Task> allTasks = new List<Task>();
@@ -85,6 +86,7 @@ public class TaskManager : MonoBehaviour
     // Update the UI via UIManager
     public void UpdateTaskQuantity(Task.TaskType taskType, int quantity)
     {
+        StressArrows.GetComponent<StressArrow>().UpdateArrows(GetTotalPendingTasks());
         UIManager.Instance.UpdateTaskQuantity(taskType, quantity);
         if(taskType == Task.TaskType.Email) FindFirstObjectByType<BobbleHeadManager>().UpdateEmailAmount(quantity);
     }
